@@ -10,3 +10,5 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::get('kasir/penjualan', [PenjualanController::class, 'index']);
 Route::post('kasir/penjualan/simpan', [PenjualanController::class, 'simpan']);
+
+Route::get('/kasir/stok', [PenjualanController::class, 'stok']);

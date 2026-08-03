@@ -32,6 +32,8 @@ class PenjualanController extends Controller
                 'Jam'         => $jam,
                 'CaraBayar'   => 'Tunai',
                 'Operator'    => auth()->user()->username,
+                'KodePlg'     => 'P0001',
+                'NamaPlg'     => 'Customer umum',
                 'IdKode'      => $noNota,
                 'KodeBrg'     => $item['kode'],
                 'NamaBrg'     => $item['nama'],
@@ -60,4 +62,10 @@ class PenjualanController extends Controller
 
         return response()->json(['success' => true, 'no_nota' => $noNota]);
     }
+    public function stok()
+    {
+        $barang = Barang::all();
+        return view('kasir.stok', compact('barang'));
+    }
+
 }
