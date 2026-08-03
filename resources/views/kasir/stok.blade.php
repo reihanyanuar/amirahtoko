@@ -18,7 +18,7 @@
                 <td>{{ $item->KodeBrg }}</td>
                 <td>{{ $item->NamaBrg }}</td>
                 <td>{{ $item->Jenis }}</td>
-                <td>{{ $item->JmlStock }}</td>
+                <td>{{ $item->JmlStock }}</td>x
                 <td>{{ $item->SatKcl }}</td>
                 <td>Rp {{ number_format($item->Harga1, 0, ',', '.') }}</td>
             </tr>
