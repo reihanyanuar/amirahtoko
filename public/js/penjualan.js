@@ -79,3 +79,32 @@ function renderKeranjang() {
 function formatRupiah(angka) {
     return angka.toLocaleString('id-ID');
 }
+
+document.querySelector('.pay-btn').addEventListener('click', () => {
+    if (cart.length === 0) {
+        alert('Keranjang masih kosong!');
+        return;
+    }
+
+    fetch('/kasir/penjualan/simpan', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+        },
+        body: JSON.stringify({ items: cart }),
+    })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                alert('Transaksi berhasil! No Nota: ' + data.no_nota);
+                cart = [];
+                renderKeranjang();
+                location.reload(); // refresh biar stok barang ke-update di tampilan
+            }
+        })
+        .catch(err => {
+            alert('Terjadi kesalahan, coba lagi.');
+            console.error(err);
+        });
+});

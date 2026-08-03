@@ -5,6 +5,7 @@
     <title>@yield('title') - Toko Kelontong</title>
     <link rel="stylesheet" href="{{ asset('css/layouts.css') }}">
     <link rel="stylesheet" href="{{ asset('css/kasir.css') }}">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 <body>
 
