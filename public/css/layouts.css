@@ -1,0 +1,185 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    background: #EEF1F5;
+    color: #1B2431;
+}
+
+.app-layout {
+    display: flex;
+    height: 100vh;
+}
+
+/* SIDEBAR */
+.sidebar {
+    width: 230px;
+    background: #101B33;
+    color: #C7D2E3;
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+}
+
+.sidebar-brand {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 18px;
+    font-weight: 700;
+    font-size: 16px;
+    color: #fff;
+    border-bottom: 1px solid #1E2C4C;
+}
+
+.sidebar-brand .brand-icon {
+    color: #4ADE80;
+    font-size: 18px;
+}
+
+/* USER INFO */
+.sidebar-user-box {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 16px;
+    border-bottom: 1px solid #1E2C4C;
+}
+
+.user-avatar {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: #16A34A;
+    color: #fff;
+    font-weight: 700;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.user-name {
+    font-size: 13px;
+    font-weight: 700;
+    color: #fff;
+}
+
+.user-role {
+    font-size: 11px;
+    color: #4ADE80;
+}
+
+.sidebar-nav {
+    padding: 12px;
+    flex: 1;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    border-radius: 8px;
+    font-size: 13.5px;
+    margin-bottom: 4px;
+    color: #AEB9CC;
+    text-decoration: none;
+}
+
+.nav-item.active {
+    background: #16A34A;
+    color: #fff;
+    font-weight: 600;
+}
+
+.nav-item:hover:not(.active) {
+    background: #1A2847;
+}
+
+/* STOK MENIPIS WARNING */
+.sidebar-warning {
+    margin: 12px;
+    padding: 10px 12px;
+    background: #4A2E12;
+    border: 1px solid #92400E;
+    border-radius: 8px;
+    color: #FBBF24;
+    font-size: 11.5px;
+    font-weight: 600;
+}
+
+.sidebar-logout {
+    padding: 14px 18px;
+    border-top: 1px solid #1E2C4C;
+}
+
+.sidebar-logout button {
+    width: 100%;
+    background: transparent;
+    border: 1px solid #2A3A5C;
+    color: #C7D2E3;
+    padding: 9px;
+    border-radius: 6px;
+    font-size: 12.5px;
+    cursor: pointer;
+}
+
+.sidebar-logout button:hover {
+    background: #1A2847;
+}
+
+/* MAIN */
+.main-wrapper {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.topbar {
+    background: #fff;
+    padding: 16px 26px;
+    border-bottom: 1px solid #E1E6EE;
+}
+
+.topbar h1 {
+    font-size: 19px;
+    color: #16233D;
+}
+
+.main-content {
+    flex: 1;
+    background: #E5E8EC;
+    padding: 22px 26px;
+    overflow: auto;
+}
+
+.table {
+    width: 100%;
+    background: #fff;
+    border-radius: 10px;
+    border: 1px solid #E1E6EE;
+    border-collapse: collapse;
+    overflow: hidden;
+}
+
+.table th {
+    text-align: left;
+    background: #F7F9FC;
+    font-size: 12px;
+    color: #667085;
+    padding: 10px 14px;
+    border-bottom: 1px solid #E1E6EE;
+}
+
+.table td {
+    padding: 11px 14px;
+    font-size: 13px;
+    border-bottom: 1px solid #F1F3F7;
+}
