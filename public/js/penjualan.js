@@ -94,7 +94,12 @@ document.querySelector('.pay-btn').addEventListener('click', () => {
         },
         body: JSON.stringify({ items: cart }),
     })
-        .then(res => res.json())
+        .then(res => {
+            if (!res.ok) {
+                return res.text().then(text => { throw new Error('Server error ' + res.status + ': ' + text); });
+            }
+            return res.json();
+        })
         .then(data => {
             if (data.success) {
                 alert('Transaksi berhasil! No Nota: ' + data.no_nota);
