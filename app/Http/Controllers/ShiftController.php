@@ -11,7 +11,18 @@ class ShiftController extends Controller
     public function index()
     {
         $shiftAktif = Shift::where('user_id', auth()->id())->whereNull('selesai')->first();
-        return view('kasir.shift', compact('shiftAktif'));
+
+        if ($shiftAktif) {
+            $shiftAktif->pendapatan = $this->hitungPendapatan($shiftAktif);
+        }
+
+        $riwayatShift = Shift::where('user_id', auth()->id())
+            ->whereNotNull('selesai')
+            ->whereDate('mulai', today())
+            ->orderByDesc('mulai')
+            ->get();
+
+        return view('kasir.shift', compact('shiftAktif', 'riwayatShift'));
     }
 
     public function buka(Request $request)
@@ -31,12 +42,8 @@ class ShiftController extends Controller
     {
         $shift = Shift::where('user_id', auth()->id())->whereNull('selesai')->firstOrFail();
 
-        $totalTunai = Penjualan::where('Operator', auth()->user()->username)
-            ->whereDate('Tanggal', $shift->mulai->format('Y-m-d'))
-            ->where('CaraBayar', 'Tunai')
-            ->sum('TotalHarga');
-
-        $kasAkhirSistem = $shift->kas_awal + $totalTunai;
+        $pendapatan = $this->hitungPendapatan($shift);
+        $kasAkhirSistem = $shift->kas_awal + $pendapatan;
 
         $shift->update([
             'kas_akhir_sistem' => $kasAkhirSistem,
@@ -46,5 +53,17 @@ class ShiftController extends Controller
         ]);
 
         return redirect('/kasir/shift')->with('shift_selesai', $shift);
+    }
+
+    private function hitungPendapatan(Shift $shift): float
+    {
+        $query = Penjualan::where('Operator', auth()->user()->username)
+            ->whereDate('Tanggal', '>=', $shift->mulai->format('Y-m-d'));
+
+        if ($shift->selesai) {
+            $query->whereDate('Tanggal', '<=', $shift->selesai->format('Y-m-d'));
+        }
+
+        return (float) $query->sum('TotalHarga');
     }
 }

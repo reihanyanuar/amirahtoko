@@ -41,10 +41,12 @@
     background: #fff;
     color: #1E293B;
     transition: border-color 0.15s;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
 }
 
-.search-bar input::placeholder { color: #94A3B8; }
+.search-bar input::placeholder {
+    color: #94A3B8;
+}
 
 .search-bar input:focus {
     outline: none;
@@ -82,7 +84,7 @@
     background: #16A34A;
     color: #fff;
     border-color: #16A34A;
-    box-shadow: 0 2px 8px rgba(22,163,74,0.25);
+    box-shadow: 0 2px 8px rgba(22, 163, 74, 0.25);
 }
 
 /* Product Grid */
@@ -103,7 +105,7 @@
     text-align: left;
     transition: all 0.18s ease;
     position: relative;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
 }
 
 .product-card:hover {
@@ -183,7 +185,7 @@
     display: flex;
     flex-direction: column;
     flex-shrink: 0;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
     overflow: hidden;
 }
 
@@ -411,12 +413,12 @@
     display: flex;
     align-items: center;
     gap: 14px;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
     transition: box-shadow 0.2s;
 }
 
 .stat-card:hover {
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
 .stat-icon {
@@ -430,10 +432,21 @@
     flex-shrink: 0;
 }
 
-.stat-icon.blue   { background: #EFF6FF; }
-.stat-icon.yellow { background: #FFFBEB; }
-.stat-icon.red    { background: #FEF2F2; }
-.stat-icon.green  { background: #F0FDF4; }
+.stat-icon.blue {
+    background: #EFF6FF;
+}
+
+.stat-icon.yellow {
+    background: #FFFBEB;
+}
+
+.stat-icon.red {
+    background: #FEF2F2;
+}
+
+.stat-icon.green {
+    background: #F0FDF4;
+}
 
 .stat-number {
     font-size: 26px;
@@ -486,7 +499,10 @@
     gap: 5px;
 }
 
-.filter-tab:hover { border-color: #94A3B8; color: #334155; }
+.filter-tab:hover {
+    border-color: #94A3B8;
+    color: #334155;
+}
 
 .filter-tab.active {
     background: #0F172A;
@@ -524,8 +540,13 @@
 }
 
 /* Table row color for low stock */
-.row-low td { background: #FFFBEB; }
-.row-critical td { background: #FEF2F2; }
+.row-low td {
+    background: #FFFBEB;
+}
+
+.row-critical td {
+    background: #FEF2F2;
+}
 
 /* Empty table state */
 .table-empty {
@@ -549,20 +570,29 @@
     z-index: 1000;
 }
 
-.modal-overlay.show { display: flex; }
+.modal-overlay.show {
+    display: flex;
+}
 
 .modal-box {
     background: #fff;
     border-radius: 16px;
     padding: 28px;
     width: 380px;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
     animation: modalIn 0.2s ease;
 }
 
 @keyframes modalIn {
-    from { opacity: 0; transform: scale(0.95) translateY(10px); }
-    to   { opacity: 1; transform: scale(1) translateY(0); }
+    from {
+        opacity: 0;
+        transform: scale(0.95) translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
 }
 
 .modal-title {
@@ -611,7 +641,7 @@
 .modal-input:focus {
     outline: none;
     border-color: #16A34A;
-    box-shadow: 0 0 0 3px rgba(22,163,74,0.12);
+    box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.12);
 }
 
 .modal-kembalian {
@@ -625,8 +655,17 @@
     border: 1px solid #86EFAC;
 }
 
-.modal-kembalian-label { font-size: 13px; color: #16A34A; font-weight: 600; }
-.modal-kembalian-val   { font-size: 17px; font-weight: 800; color: #15803D; }
+.modal-kembalian-label {
+    font-size: 13px;
+    color: #16A34A;
+    font-weight: 600;
+}
+
+.modal-kembalian-val {
+    font-size: 17px;
+    font-weight: 800;
+    color: #15803D;
+}
 
 .modal-actions {
     display: flex;
@@ -648,7 +687,10 @@
     transition: all 0.15s;
 }
 
-.btn-cancel:hover { background: #F8FAFC; border-color: #CBD5E1; }
+.btn-cancel:hover {
+    background: #F8FAFC;
+    border-color: #CBD5E1;
+}
 
 .btn-confirm {
     flex: 2;
@@ -662,11 +704,11 @@
     cursor: pointer;
     font-family: inherit;
     transition: all 0.2s;
-    box-shadow: 0 4px 14px rgba(22,163,74,0.3);
+    box-shadow: 0 4px 14px rgba(22, 163, 74, 0.3);
 }
 
 .btn-confirm:hover {
-    box-shadow: 0 6px 20px rgba(22,163,74,0.4);
+    box-shadow: 0 6px 20px rgba(22, 163, 74, 0.4);
     transform: translateY(-1px);
 }
 
@@ -683,7 +725,7 @@
     border-radius: 12px;
     font-size: 14px;
     font-weight: 600;
-    box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
     display: none;
     align-items: center;
     gap: 10px;
@@ -692,11 +734,163 @@
     max-width: 340px;
 }
 
-.toast.show { display: flex; }
-.toast.success { border-left: 4px solid #4ADE80; }
-.toast.error   { border-left: 4px solid #F87171; }
+.toast.show {
+    display: flex;
+}
+
+.toast.success {
+    border-left: 4px solid #4ADE80;
+}
+
+.toast.error {
+    border-left: 4px solid #F87171;
+}
 
 @keyframes toastIn {
-    from { opacity: 0; transform: translateX(20px); }
-    to   { opacity: 1; transform: translateX(0); }
+    from {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* KASIR CSS */
+/* SHIFT PAGE */
+.shift-card {
+    max-width: 480px;
+    background: #fff;
+    border-radius: 12px;
+    border: 1px solid #E1E6EE;
+    padding: 22px;
+}
+
+.shift-card h3 {
+    margin-bottom: 4px;
+}
+
+.shift-card .desc {
+    color: #667085;
+    font-size: 13px;
+    margin-bottom: 16px;
+}
+
+.shift-card .pendapatan {
+    color: #16A34A;
+    font-size: 13px;
+    margin-bottom: 16px;
+    font-weight: 600;
+}
+
+.shift-card form label {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    color: #667085;
+    margin-bottom: 5px;
+}
+
+.shift-card form input {
+    width: 100%;
+    padding: 9px 11px;
+    margin: 0 0 16px;
+    border: 1px solid #D7DEE9;
+    border-radius: 7px;
+    font-size: 13px;
+}
+
+.btn-tutup-shift {
+    width: 100%;
+    padding: 12px;
+    background: #16233D;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-buka-shift {
+    width: 100%;
+    padding: 12px;
+    background: #4ADE80;
+    color: #0C1A0F;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.shift-alert {
+    border-radius: 10px;
+    padding: 16px;
+    margin-bottom: 16px;
+    max-width: 480px;
+}
+
+.shift-alert.success {
+    background: #ECFDF3;
+    border: 1px solid #16A34A;
+}
+
+.shift-alert.warning {
+    background: #FEF3C7;
+    border: 1px solid #F59E0B;
+    color: #92400E;
+    font-size: 13px;
+}
+
+.shift-alert-detail {
+    margin-top: 8px;
+    font-size: 13px;
+    color: #334155;
+}
+
+.text-danger {
+    color: #DC2626;
+}
+
+.text-success {
+    color: #16A34A;
+}
+
+/* RIWAYAT SHIFT */
+.riwayat-title {
+    margin-top: 24px;
+    margin-bottom: 12px;
+    font-size: 15px;
+}
+
+.riwayat-card {
+    background: #fff;
+    border: 1px solid #E1E6EE;
+    border-radius: 10px;
+    padding: 16px;
+    margin-bottom: 10px;
+    max-width: 600px;
+}
+
+.riwayat-head {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.riwayat-durasi {
+    font-size: 12px;
+    color: #98A2B3;
+}
+
+.riwayat-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    font-size: 12.5px;
+}
+
+.riwayat-grid .label {
+    color: #98A2B3;
 }
