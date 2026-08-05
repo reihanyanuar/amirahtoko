@@ -17,20 +17,29 @@ class PenjualanController extends Controller
     public function simpan(Request $request)
     {
         $items = $request->input('items');
+        $caraBayar = $request->input('cara_bayar', 'Tunai');
+        $uangDiterima = (float) $request->input('bayar', 0);
+        
         $noNota = 'TX' . now()->format('YmdHis');
         $tanggal = now()->format('Y-m-d');
         $jam = now()->format('H:i:s');
 
-        foreach ($items as $item) {
-            $barang = Barang::find($item['kode']);
+        $totalTransaksi = collect($items)->sum(fn ($i) => $i['harga'] * $i['qty']);
+        $kembalian = $caraBayar === 'Tunai' ? max(0, $uangDiterima - $totalTransaksi) : 0;
 
+        $items = array_values($items);
+        $jumlahItem = count($items);
+
+        foreach ($items as $index => $item) {
+            $barang = Barang::find($item['kode']);
             $totalHargaBaris = $item['harga'] * $item['qty'];
+            $isBarisTerakhir = $index === $jumlahItem - 1;
 
             Penjualan::create([
                 'NoNota'      => $noNota,
                 'Tanggal'     => $tanggal,
                 'Jam'         => $jam,
-                'CaraBayar'   => 'Tunai',
+                'CaraBayar'   => $caraBayar,
                 'Operator'    => auth()->user()->username,
                 'KodePlg'     => 'P0001',
                 'NamaPlg'     => 'Customer umum',
@@ -51,7 +60,8 @@ class PenjualanController extends Controller
                 'Total'       => $totalHargaBaris,
                 'Poin'        => 0,
                 'Bayar'       => $totalHargaBaris,
-                'Sisa'        => 0,
+                'Sisa'        => $isBarisTerakhir ? $kembalian : 0,
+                'Ket'         => $isBarisTerakhir && $kembalian > 0 ? 'Kembalian' : null,
             ]);
 
             if ($barang) {

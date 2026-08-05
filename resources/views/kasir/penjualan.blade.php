@@ -97,18 +97,47 @@
             <span id="mTotal">Rp 0</span>
         </div>
 
-        <div class="modal-input-label">Uang Diterima</div>
-        <input type="number" class="modal-input" id="uangDiterima"
-               placeholder="0" oninput="hitungKembalian()">
-
-        <div class="modal-kembalian" id="kembalianBox" style="display:none">
-            <span class="modal-kembalian-label">Kembalian</span>
-            <span class="modal-kembalian-val" id="kembalianVal">Rp 0</span>
+        {{-- Metode Bayar --}}
+        <div class="modal-input-label">Metode Bayar</div>
+        <div style="display:flex; gap:8px; margin-bottom:14px;">
+            <button type="button" class="pm-tab active" data-method="Tunai" onclick="pilihMetodeBayar(this)">💵 Tunai</button>
+            <button type="button" class="pm-tab" data-method="Transfer" onclick="pilihMetodeBayar(this)">🏦 Transfer</button>
+            <button type="button" class="pm-tab" data-method="QRIS" onclick="pilihMetodeBayar(this)">📱 QRIS</button>
         </div>
 
-        <div class="modal-actions">
-            <button class="btn-cancel" onclick="closeModalBayar()">Batal</button>
-            <button class="btn-confirm" id="btnConfirmBayar" onclick="prosesPayment()">✔ Bayar Sekarang</button>
+        {{-- Area Tunai --}}
+        <div id="areaTunai">
+            <div class="modal-input-label">Uang Diterima</div>
+            <input type="number" class="modal-input" id="uangDiterima"
+                   placeholder="0" oninput="hitungKembalian()">
+
+            <div style="display:grid; grid-template-columns: repeat(4, 1fr); gap:6px; margin:10px 0 14px;">
+                <button type="button" class="btn-cancel" style="padding:6px; font-size:13px;" onclick="isiQuickCash(10000)">10rb</button>
+                <button type="button" class="btn-cancel" style="padding:6px; font-size:13px;" onclick="isiQuickCash(20000)">20rb</button>
+                <button type="button" class="btn-cancel" style="padding:6px; font-size:13px;" onclick="isiQuickCash(50000)">50rb</button>
+                <button type="button" class="btn-cancel" style="padding:6px; font-size:13px;" onclick="isiQuickCash(100000)">100rb</button>
+            </div>
+
+            <div class="modal-kembalian" id="kembalianBox" style="display:none">
+                <span class="modal-kembalian-label">Kembalian</span>
+                <span class="modal-kembalian-val" id="kembalianVal">Rp 0</span>
+            </div>
+        </div>
+
+        {{-- Area Non-Tunai --}}
+        <div id="areaNonTunai" style="display:none">
+            <div style="background:#FEF9C3; border:1px solid #FDE68A; border-radius:9px; padding:14px; font-size:14px; color:#92400E; margin-bottom:12px;">
+                ⚠️ Pastikan pembayaran sudah diterima sebelum konfirmasi.
+            </div>
+            <label style="display:flex; align-items:center; gap:10px; font-size:14px; cursor:pointer; font-weight:600; color:#334155;">
+                <input type="checkbox" id="konfirmasiManual" onchange="toggleTombolBayar()" style="width:18px;height:18px;">
+                Pembayaran sudah diterima
+            </label>
+        </div>
+
+        <div class="modal-actions" style="margin-top:18px;">
+            <button type="button" class="btn-cancel" onclick="closeModalBayar()">Batal</button>
+            <button type="button" class="btn-confirm" id="btnConfirmBayar" onclick="prosesPayment()" disabled>✔ Bayar Sekarang</button>
         </div>
     </div>
 </div>
@@ -136,79 +165,6 @@ document.getElementById('cariBarang').addEventListener('input', function() {
         const kode = card.dataset.kode.toLowerCase();
         card.style.display = (nama.includes(q) || kode.includes(q)) ? '' : 'none';
     });
-});
-
-/* ---- Modal helpers ---- */
-function openModalBayar() {
-    if (cart.length === 0) { showToast('Keranjang masih kosong!', 'error'); return; }
-    const total = cart.reduce((s, i) => s + i.harga * i.qty, 0);
-    document.getElementById('mTotal').textContent = 'Rp ' + formatRupiah(total);
-    document.getElementById('mItemCount').textContent = cart.reduce((s,i)=>s+i.qty,0) + ' item';
-    document.getElementById('uangDiterima').value = '';
-    document.getElementById('kembalianBox').style.display = 'none';
-    document.getElementById('modalBayar').classList.add('show');
-    setTimeout(() => document.getElementById('uangDiterima').focus(), 100);
-}
-
-function closeModalBayar() {
-    document.getElementById('modalBayar').classList.remove('show');
-}
-
-function hitungKembalian() {
-    const total = cart.reduce((s, i) => s + i.harga * i.qty, 0);
-    const bayar = parseInt(document.getElementById('uangDiterima').value) || 0;
-    const kembalian = bayar - total;
-    const box = document.getElementById('kembalianBox');
-    if (bayar > 0) {
-        box.style.display = 'flex';
-        document.getElementById('kembalianVal').textContent = 'Rp ' + formatRupiah(Math.max(0, kembalian));
-        box.style.borderColor = kembalian >= 0 ? '#86EFAC' : '#FCA5A5';
-        box.style.background  = kembalian >= 0 ? '#F0FDF4' : '#FEF2F2';
-        document.getElementById('kembalianVal').style.color = kembalian >= 0 ? '#15803D' : '#B91C1C';
-    } else {
-        box.style.display = 'none';
-    }
-}
-
-function prosesPayment() {
-    const total = cart.reduce((s, i) => s + i.harga * i.qty, 0);
-    const bayar = parseInt(document.getElementById('uangDiterima').value) || 0;
-    if (bayar < total) { showToast('Uang kurang!', 'error'); return; }
-
-    document.getElementById('btnConfirmBayar').disabled = true;
-    document.getElementById('btnConfirmBayar').textContent = '⏳ Memproses...';
-
-    fetch('/kasir/penjualan/simpan', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
-        },
-        body: JSON.stringify({ items: cart, bayar: bayar }),
-    })
-    .then(res => {
-        if (!res.ok) return res.text().then(t => { throw new Error(t); });
-        return res.json();
-    })
-    .then(data => {
-        if (data.success) {
-            closeModalBayar();
-            showToast('✅ Transaksi berhasil! No: ' + data.no_nota, 'success');
-            cart = [];
-            renderKeranjang();
-            setTimeout(() => location.reload(), 2000);
-        }
-    })
-    .catch(() => {
-        showToast('Terjadi kesalahan, coba lagi.', 'error');
-        document.getElementById('btnConfirmBayar').disabled = false;
-        document.getElementById('btnConfirmBayar').textContent = '✔ Bayar Sekarang';
-    });
-}
-
-// Close modal on overlay click
-document.getElementById('modalBayar').addEventListener('click', function(e) {
-    if (e.target === this) closeModalBayar();
 });
 </script>
 @endpush

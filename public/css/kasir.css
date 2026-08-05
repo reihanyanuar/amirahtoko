@@ -4,7 +4,7 @@
 .pos-layout {
     display: flex;
     gap: 20px;
-    height: calc(100vh - 108px);
+    height: calc(100vh - 110px);
 }
 
 /* ---- Products Column ---- */
@@ -26,17 +26,17 @@
     left: 14px;
     top: 50%;
     transform: translateY(-50%);
-    font-size: 15px;
+    font-size: 16px;
     color: #94A3B8;
     pointer-events: none;
 }
 
 .search-bar input {
     width: 100%;
-    padding: 11px 14px 11px 40px;
+    padding: 12px 14px 12px 42px;
     border: 1.5px solid #E2E8F0;
     border-radius: 10px;
-    font-size: 13.5px;
+    font-size: 15px;
     font-family: inherit;
     background: #fff;
     color: #1E293B;
@@ -63,11 +63,11 @@
 }
 
 .category-chip {
-    padding: 6px 14px;
+    padding: 7px 16px;
     border-radius: 20px;
     border: 1.5px solid #E2E8F0;
     background: #fff;
-    font-size: 12.5px;
+    font-size: 14px;
     font-weight: 600;
     color: #64748B;
     cursor: pointer;
@@ -90,7 +90,7 @@
 /* Product Grid */
 .product-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(175px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
     gap: 12px;
     overflow: auto;
     padding-bottom: 4px;
@@ -119,19 +119,19 @@
 }
 
 .product-card-icon {
-    width: 36px;
-    height: 36px;
+    width: 38px;
+    height: 38px;
     background: #F0FDF4;
     border-radius: 8px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 18px;
+    font-size: 20px;
     margin-bottom: 10px;
 }
 
 .product-name {
-    font-size: 13px;
+    font-size: 14px;
     font-weight: 700;
     color: #0F172A;
     margin-bottom: 2px;
@@ -139,7 +139,7 @@
 }
 
 .product-barcode {
-    font-size: 10.5px;
+    font-size: 12px;
     color: #94A3B8;
     font-family: 'Courier New', monospace;
     margin-bottom: 10px;
@@ -152,17 +152,17 @@
 }
 
 .product-price {
-    font-size: 14px;
+    font-size: 15px;
     color: #16A34A;
     font-weight: 700;
 }
 
 .stock-badge {
-    font-size: 11px;
+    font-size: 12px;
     font-weight: 600;
     color: #15803D;
     background: #DCFCE7;
-    padding: 2px 8px;
+    padding: 3px 8px;
     border-radius: 6px;
 }
 
@@ -178,7 +178,7 @@
 
 /* ---- Cart Column ---- */
 .cart-col {
-    width: 320px;
+    width: 330px;
     background: #fff;
     border-radius: 14px;
     border: 1.5px solid #E2E8F0;
@@ -199,15 +199,15 @@
 
 .cart-title {
     font-weight: 700;
-    font-size: 15px;
+    font-size: 16px;
     color: #0F172A;
 }
 
 .cart-count {
-    font-size: 11.5px;
+    font-size: 13px;
     color: #94A3B8;
     background: #F1F5F9;
-    padding: 3px 8px;
+    padding: 3px 9px;
     border-radius: 10px;
     font-weight: 600;
 }
@@ -220,7 +220,7 @@
 
 .cart-empty {
     color: #94A3B8;
-    font-size: 13px;
+    font-size: 14px;
     text-align: center;
     margin-top: 60px;
     display: flex;
@@ -230,7 +230,7 @@
 }
 
 .cart-empty-icon {
-    font-size: 36px;
+    font-size: 38px;
     opacity: 0.4;
 }
 
@@ -244,20 +244,20 @@
 }
 
 .cart-item .ci-name {
-    font-size: 13px;
+    font-size: 14px;
     font-weight: 600;
     color: #0F172A;
     line-height: 1.3;
 }
 
 .cart-item .ci-sub {
-    font-size: 11px;
+    font-size: 12px;
     color: #94A3B8;
     margin-top: 2px;
 }
 
 .cart-item .ci-price {
-    font-size: 13px;
+    font-size: 14px;
     font-weight: 700;
     color: #16A34A;
     white-space: nowrap;
@@ -274,7 +274,7 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: 10px;
-    font-size: 13px;
+    font-size: 14px;
     color: #64748B;
 }
 
@@ -283,7 +283,7 @@
     padding: 5px 8px;
     border: 1.5px solid #E2E8F0;
     border-radius: 6px;
-    font-size: 12px;
+    font-size: 13px;
     text-align: right;
     font-family: inherit;
 }
@@ -291,13 +291,13 @@
 .sum-row {
     display: flex;
     justify-content: space-between;
-    font-size: 13px;
+    font-size: 14px;
     margin-bottom: 6px;
     color: #64748B;
 }
 
 .sum-row.total {
-    font-size: 18px;
+    font-size: 19px;
     font-weight: 800;
     color: #0F172A;
     margin-top: 10px;
@@ -307,13 +307,13 @@
 
 .pay-btn {
     width: 100%;
-    padding: 14px;
+    padding: 15px;
     border: none;
     border-radius: 10px;
     background: linear-gradient(135deg, #16A34A, #22C55E);
     color: #fff;
     font-weight: 700;
-    font-size: 14px;
+    font-size: 16px;
     font-family: inherit;
     cursor: pointer;
     margin-top: 12px;
@@ -348,13 +348,13 @@
 }
 
 .qty-ctl button {
-    width: 26px;
-    height: 26px;
+    width: 28px;
+    height: 28px;
     border-radius: 6px;
     border: 1.5px solid #E2E8F0;
     background: #F8FAFC;
     cursor: pointer;
-    font-size: 15px;
+    font-size: 16px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -370,7 +370,7 @@
 }
 
 .qty-ctl span {
-    font-size: 13.5px;
+    font-size: 15px;
     font-weight: 700;
     min-width: 20px;
     text-align: center;
@@ -385,14 +385,14 @@
 }
 
 .page-header h2 {
-    font-size: 20px;
+    font-size: 22px;
     font-weight: 800;
     color: #0F172A;
     letter-spacing: -0.3px;
 }
 
 .page-header p {
-    font-size: 13px;
+    font-size: 14px;
     color: #94A3B8;
     margin-top: 2px;
 }
@@ -422,13 +422,13 @@
 }
 
 .stat-icon {
-    width: 44px;
-    height: 44px;
+    width: 46px;
+    height: 46px;
     border-radius: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 20px;
+    font-size: 22px;
     flex-shrink: 0;
 }
 
@@ -449,7 +449,7 @@
 }
 
 .stat-number {
-    font-size: 26px;
+    font-size: 28px;
     font-weight: 800;
     color: #0F172A;
     line-height: 1;
@@ -457,7 +457,7 @@
 }
 
 .stat-label {
-    font-size: 12.5px;
+    font-size: 13px;
     color: #64748B;
     margin-top: 3px;
     font-weight: 500;
@@ -484,11 +484,11 @@
 }
 
 .filter-tab {
-    padding: 7px 14px;
+    padding: 8px 16px;
     border-radius: 8px;
     border: 1.5px solid #E2E8F0;
     background: #fff;
-    font-size: 12.5px;
+    font-size: 14px;
     font-weight: 600;
     color: #64748B;
     cursor: pointer;
@@ -532,11 +532,11 @@
 .stok-val {
     font-weight: 700;
     min-width: 30px;
-    font-size: 13.5px;
+    font-size: 15px;
 }
 
 .stok-warn-icon {
-    font-size: 14px;
+    font-size: 15px;
 }
 
 /* Table row color for low stock */
@@ -553,7 +553,7 @@
     text-align: center;
     padding: 60px 20px;
     color: #94A3B8;
-    font-size: 14px;
+    font-size: 15px;
 }
 
 /* ============================
@@ -578,7 +578,7 @@
     background: #fff;
     border-radius: 16px;
     padding: 28px;
-    width: 380px;
+    width: 400px;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
     animation: modalIn 0.2s ease;
 }
@@ -596,7 +596,7 @@
 }
 
 .modal-title {
-    font-size: 17px;
+    font-size: 19px;
     font-weight: 800;
     color: #0F172A;
     margin-bottom: 18px;
@@ -605,14 +605,14 @@
 .modal-info-row {
     display: flex;
     justify-content: space-between;
-    font-size: 13.5px;
-    padding: 8px 0;
+    font-size: 15px;
+    padding: 9px 0;
     border-bottom: 1px solid #F1F5F9;
     color: #475569;
 }
 
 .modal-info-row.total {
-    font-size: 17px;
+    font-size: 19px;
     font-weight: 800;
     color: #0F172A;
     border-bottom: none;
@@ -620,7 +620,7 @@
 }
 
 .modal-input-label {
-    font-size: 12.5px;
+    font-size: 14px;
     font-weight: 600;
     color: #64748B;
     margin: 14px 0 6px;
@@ -628,10 +628,10 @@
 
 .modal-input {
     width: 100%;
-    padding: 11px 14px;
+    padding: 12px 14px;
     border: 1.5px solid #E2E8F0;
     border-radius: 9px;
-    font-size: 15px;
+    font-size: 17px;
     font-weight: 700;
     font-family: inherit;
     color: #0F172A;
@@ -656,13 +656,13 @@
 }
 
 .modal-kembalian-label {
-    font-size: 13px;
+    font-size: 15px;
     color: #16A34A;
     font-weight: 600;
 }
 
 .modal-kembalian-val {
-    font-size: 17px;
+    font-size: 19px;
     font-weight: 800;
     color: #15803D;
 }
@@ -675,12 +675,12 @@
 
 .btn-cancel {
     flex: 1;
-    padding: 12px;
+    padding: 13px;
     border: 1.5px solid #E2E8F0;
     border-radius: 9px;
     background: #fff;
     color: #475569;
-    font-size: 14px;
+    font-size: 15px;
     font-weight: 600;
     cursor: pointer;
     font-family: inherit;
@@ -694,12 +694,12 @@
 
 .btn-confirm {
     flex: 2;
-    padding: 12px;
+    padding: 13px;
     border: none;
     border-radius: 9px;
     background: linear-gradient(135deg, #16A34A, #22C55E);
     color: #fff;
-    font-size: 14px;
+    font-size: 15px;
     font-weight: 700;
     cursor: pointer;
     font-family: inherit;
@@ -721,9 +721,9 @@
     right: 28px;
     background: #0F172A;
     color: #fff;
-    padding: 14px 20px;
+    padding: 15px 22px;
     border-radius: 12px;
-    font-size: 14px;
+    font-size: 15px;
     font-weight: 600;
     box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
     display: none;
@@ -731,7 +731,7 @@
     gap: 10px;
     z-index: 2000;
     animation: toastIn 0.3s ease;
-    max-width: 340px;
+    max-width: 360px;
 }
 
 .toast.show {
@@ -758,36 +758,38 @@
     }
 }
 
-/* KASIR CSS */
-/* SHIFT PAGE */
+/* ============================
+   SHIFT PAGE
+   ============================ */
 .shift-card {
     max-width: 480px;
     background: #fff;
     border-radius: 12px;
     border: 1px solid #E1E6EE;
-    padding: 22px;
+    padding: 24px;
 }
 
 .shift-card h3 {
     margin-bottom: 4px;
+    font-size: 18px;
 }
 
 .shift-card .desc {
     color: #667085;
-    font-size: 13px;
+    font-size: 14px;
     margin-bottom: 16px;
 }
 
 .shift-card .pendapatan {
     color: #16A34A;
-    font-size: 13px;
+    font-size: 14px;
     margin-bottom: 16px;
     font-weight: 600;
 }
 
 .shift-card form label {
     display: block;
-    font-size: 12px;
+    font-size: 13px;
     font-weight: 600;
     color: #667085;
     margin-bottom: 5px;
@@ -795,32 +797,34 @@
 
 .shift-card form input {
     width: 100%;
-    padding: 9px 11px;
+    padding: 10px 12px;
     margin: 0 0 16px;
     border: 1px solid #D7DEE9;
     border-radius: 7px;
-    font-size: 13px;
+    font-size: 15px;
 }
 
 .btn-tutup-shift {
     width: 100%;
-    padding: 12px;
+    padding: 13px;
     background: #16233D;
     color: #fff;
     border: none;
     border-radius: 8px;
     font-weight: 600;
+    font-size: 15px;
     cursor: pointer;
 }
 
 .btn-buka-shift {
     width: 100%;
-    padding: 12px;
+    padding: 13px;
     background: #4ADE80;
     color: #0C1A0F;
     border: none;
     border-radius: 8px;
     font-weight: 600;
+    font-size: 15px;
     cursor: pointer;
 }
 
@@ -840,12 +844,12 @@
     background: #FEF3C7;
     border: 1px solid #F59E0B;
     color: #92400E;
-    font-size: 13px;
+    font-size: 14px;
 }
 
 .shift-alert-detail {
     margin-top: 8px;
-    font-size: 13px;
+    font-size: 14px;
     color: #334155;
 }
 
@@ -861,14 +865,15 @@
 .riwayat-title {
     margin-top: 24px;
     margin-bottom: 12px;
-    font-size: 15px;
+    font-size: 17px;
+    font-weight: 700;
 }
 
 .riwayat-card {
     background: #fff;
     border: 1px solid #E1E6EE;
     border-radius: 10px;
-    padding: 16px;
+    padding: 18px;
     margin-bottom: 10px;
     max-width: 600px;
 }
@@ -880,7 +885,7 @@
 }
 
 .riwayat-durasi {
-    font-size: 12px;
+    font-size: 13px;
     color: #98A2B3;
 }
 
@@ -888,9 +893,73 @@
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 10px;
-    font-size: 12.5px;
+    font-size: 14px;
 }
 
 .riwayat-grid .label {
     color: #98A2B3;
+}
+
+.payment-method-tabs {
+    display: flex;
+    gap: 8px;
+    margin: 16px 0;
+}
+
+.pm-tab {
+    flex: 1;
+    padding: 10px 8px;
+    border: 1px solid #D7DEE9;
+    background: #F7F9FC;
+    border-radius: 8px;
+    font-size: 12.5px;
+    font-weight: 600;
+    cursor: pointer;
+    color: #667085;
+}
+
+.pm-tab.active {
+    background: #16233D;
+    color: #fff;
+    border-color: #16233D;
+}
+
+.quick-cash-row {
+    display: flex;
+    gap: 6px;
+    margin: 10px 0 16px;
+}
+
+.quick-cash-row button {
+    flex: 1;
+    padding: 8px 0;
+    border: 1px solid #D7DEE9;
+    background: #fff;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    color: #16233D;
+}
+
+.quick-cash-row button:hover {
+    background: #F0FDF4;
+    border-color: #4ADE80;
+}
+
+.konfirmasi-manual-box {
+    background: #FEF3C7;
+    border: 1px solid #F59E0B;
+    border-radius: 8px;
+    padding: 14px;
+    margin: 16px 0;
+    font-size: 13px;
+    color: #92400E;
+}
+
+.konfirmasi-manual-box label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
 }
