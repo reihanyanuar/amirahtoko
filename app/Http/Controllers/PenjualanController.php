@@ -5,21 +5,40 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Barang;
 use App\Models\Penjualan;
+use App\Models\Shift;
 
 class PenjualanController extends Controller
 {
     public function index()
     {
+        // cek apakah kasir yang login punya shift aktif (selesai==NULL)
+        $shiftAktif = Shift::where('user_id', auth()->id())->whereNull('selesai')->first();
+
+        // jika BELUM maka akan redirect langsung ke halaman shift
+        if (!$shiftAktif) {
+            return redirect('/kasir/shift')->with('perlu_shift', true);
+        }
+
         $barang = Barang::all();
         return view('kasir.penjualan', compact('barang'));
     }
 
     public function simpan(Request $request)
     {
+        // proteksi tambahan: Cek kembali shift saat klik bayar
+        $shiftAktif = Shift::where('user_id', auth()->id())->whereNull('selesai')->first();
+
+        if (!$shiftAktif) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Shift belum dibuka atau sudah ditutup!'
+            ], 400);
+        }
+
         $items = $request->input('items');
         $caraBayar = $request->input('cara_bayar', 'Tunai');
         $uangDiterima = (float) $request->input('bayar', 0);
-        
+
         $noNota = 'TX' . now()->format('YmdHis');
         $tanggal = now()->format('Y-m-d');
         $jam = now()->format('H:i:s');
