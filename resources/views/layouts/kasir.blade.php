@@ -44,6 +44,9 @@
                    class="nav-item {{ request()->is('kasir/shift') ? 'active' : '' }}">
                     <span class="nav-icon">🕐</span> Shift
                 </a>
+                <a href="{{ url('/kasir/riwayat') }}" class="nav-item {{ request()->is('kasir/riwayat') ? 'active' : '' }}">
+                    <span class="nav-icon">📜</span> Riwayat Transaksi
+                </a>
             </nav>
 
             <div class="sidebar-logout">

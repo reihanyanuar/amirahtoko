@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Models\Barang;
 use App\Models\Penjualan;
 use App\Models\Shift;
@@ -95,6 +96,24 @@ class PenjualanController extends Controller
     {
         $barang = Barang::all();
         return view('kasir.stok', compact('barang'));
+    }
+
+    public function riwayat()
+    {
+        $riwayat = Penjualan::where('Operator', auth()->user()->username)
+        ->whereDate('Tanggal', today())
+        ->select(
+            'NoNota',
+            DB::raw('MIN(Jam) as jam'),
+            DB::raw('MAX(CaraBayar) as cara_bayar'),
+            DB::raw('SUM(TotalHarga) as total'),
+            DB::raw('COUNT(*) as jumlah_barang')
+        )
+        ->groupBy('NoNota')
+        ->orderByDesc('NoNota')
+        ->get();
+
+        return view('kasir.riwayat', compact('riwayat'));
     }
 
 }

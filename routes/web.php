@@ -15,6 +15,7 @@ Route::middleware(['role:kasir,admin,manajer'])->prefix('kasir')->group(function
     Route::get('/penjualan', [PenjualanController::class, 'index']);
     Route::post('/penjualan/simpan', [PenjualanController::class, 'simpan']);
     Route::get('/stok', [PenjualanController::class, 'stok']);
+    Route::get('/riwayat', [PenjualanController::class, 'riwayat']);
 
     Route::get('/shift', [ShiftController::class, 'index']);
     Route::post('/shift/buka', [ShiftController::class, 'buka']);
