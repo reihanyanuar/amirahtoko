@@ -34,8 +34,8 @@ class AdminController extends Controller
 
         Barang::create([
             'KodeBrg'  => $request->KodeBrg,
-            'KodeSdg'  => $request->KodeBrg,
-            'KodeBsr'  => $request->KodeBrg,
+            'KodeSdg'  => $request->KodeBrg ?: $request->KodeBsr,
+            'KodeBsr'  => $request->KodeBrg ?: $request->KodeSdg,
             'NamaBrg'  => $request->NamaBrg,
             'NamaSup'  => $request->NamaSup,
             'Jenis'    => $request->Jenis,

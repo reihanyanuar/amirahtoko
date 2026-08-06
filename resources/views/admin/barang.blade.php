@@ -37,36 +37,33 @@
     </div>
 
     <div class="form-row-two">
-        <div class="form-row">
-            <label>Jumlah Isi Dus</label>
-            <input type="number" name="IsiBsr" required placeholder="cth. 144">
-        </div>
-        <div class="form-row">
-            <label>Jumlah Isi Lusin</label>
-            <input type="number" name="IsiSdg" required placeholder="cth. 12">
-        </div>
+    <div class="form-row">
+        <label>Nama Satuan Dos</label>
+        <input type="text" name="SatBsr" placeholder="Dus">
     </div>
-
-    <div class="form-row-two">
-        <div class="form-row">
-            <label>Nama Satuan Dos</label>
-            <input type="text" name="SatBsr" required placeholder="Dus">
-        </div>
-        <div class="form-row">
-            <label>HPP Dus (Rp)</label>
-            <input type="number" name="HppBsr" required>
-        </div>
+    <div class="form-row">
+        <label>Barcode Dus</label>
+        <input type="text" name="KodeBsr" placeholder="kosongkan jika sama dengan Kode Barang">
+    </div>
+    </div>
+    <div class="form-row">
+        <label>HPP Dus (Rp)</label>
+        <input type="number" name="HppBsr">
     </div>
 
     <div class="form-row-two">
         <div class="form-row">
             <label>Nama Satuan Lusin</label>
-            <input type="text" name="SatSdg" required placeholder="Lusin">
+            <input type="text" name="SatSdg" placeholder="Lusin">
         </div>
         <div class="form-row">
-            <label>HPP Lusin (Rp)</label>
-            <input type="number" name="HppSdg" required>
+            <label>Barcode Lusin</label>
+            <input type="text" name="KodeSdg" placeholder="kosongkan jika sama dengan Kode Barang">
         </div>
+    </div>
+    <div class="form-row">
+        <label>HPP Lusin (Rp)</label>
+        <input type="number" name="HppSdg">
     </div>
 
     <div class="form-row-two">
