@@ -51,44 +51,47 @@ class PenjualanController extends Controller
         $jumlahItem = count($items);
 
         foreach ($items as $index => $item) {
-            $barang = Barang::find($item['kode']);
-            $totalHargaBaris = $item['harga'] * $item['qty'];
-            $isBarisTerakhir = $index === $jumlahItem - 1;
+        $barang = Barang::find($item['kode']);
+        $totalHargaBaris = $item['harga'] * $item['qty'];
+        $isBarisTerakhir = $index === $jumlahItem - 1;
 
-            Penjualan::create([
-                'NoNota'      => $noNota,
-                'Tanggal'     => $tanggal,
-                'Jam'         => $jam,
-                'CaraBayar'   => $caraBayar,
-                'Operator'    => auth()->user()->username,
-                'KodePlg'     => 'P0001',
-                'NamaPlg'     => 'Customer umum',
-                'IdKode'      => $noNota,
-                'KodeBrg'     => $item['kode'],
-                'NamaBrg'     => $item['nama'],
-                'Hpp'         => $barang->Hpp ?? 0,
-                'Harga'       => $item['harga'],
-                'Diskon'      => 0,
-                'HargaDis'    => $item['harga'],
-                'Qty'         => $item['qty'],
-                'Sat'         => $barang->SatKcl ?? 'Pcs',
-                'TotalHarga'  => $totalHargaBaris,
-                'SatJual'     => $barang->SatKcl ?? 'Pcs',
-                'JmlBrg'      => $item['qty'],
-                'Jumlah'      => $totalHargaBaris,
-                'SisaKredit'  => 0,
-                'Total'       => $totalHargaBaris,
-                'Poin'        => 0,
-                'Bayar'       => $totalHargaBaris,
-                'Sisa'        => $isBarisTerakhir ? $kembalian : 0,
-                'Ket'         => $isBarisTerakhir && $kembalian > 0 ? 'Kembalian' : null,
-            ]);
+        $isiPcs = $item['isiPcs'] ?? 1;
+        $qtyDalamPcs = $item['qty'] * $isiPcs;
 
-            if ($barang) {
-                $barang->JmlStock -= $item['qty'];
-                $barang->save();
-            }
+        Penjualan::create([
+            'NoNota'      => $noNota,
+            'Tanggal'     => $tanggal,
+            'Jam'         => $jam,
+            'CaraBayar'   => $caraBayar,
+            'Operator'    => auth()->user()->username,
+            'KodePlg'     => 'P0001',
+            'NamaPlg'     => 'Customer umum',
+            'IdKode'      => $noNota,
+            'KodeBrg'     => $item['kode'],
+            'NamaBrg'     => $item['nama'],
+            'Hpp'         => $barang->Hpp ?? 0,
+            'Harga'       => $item['harga'],
+            'Diskon'      => 0,
+            'HargaDis'    => $item['harga'],
+            'Qty'         => $item['qty'],
+            'Sat'         => $item['satuan'] ?? ($barang->SatKcl ?? 'Pcs'),
+            'TotalHarga'  => $totalHargaBaris,
+            'SatJual'     => $item['satuan'] ?? ($barang->SatKcl ?? 'Pcs'),
+            'JmlBrg'      => $qtyDalamPcs,
+            'Jumlah'      => $totalHargaBaris,
+            'SisaKredit'  => 0,
+            'Total'       => $totalHargaBaris,
+            'Poin'        => 0,
+            'Bayar'       => $totalHargaBaris,
+            'Sisa'        => $isBarisTerakhir ? $kembalian : 0,
+            'Ket'         => $isBarisTerakhir && $kembalian > 0 ? 'Kembalian' : null,
+        ]);
+
+        if ($barang) {
+            $barang->JmlStock -= $qtyDalamPcs;
+            $barang->save();
         }
+    }
 
         return response()->json(['success' => true, 'no_nota' => $noNota]);
     }

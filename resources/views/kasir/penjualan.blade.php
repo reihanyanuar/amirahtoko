@@ -27,32 +27,39 @@
 
         {{-- Product Grid --}}
         <div class="product-grid" id="productGrid">
-            @foreach ($barang as $item)
-                @php
-                    $isLow = $item->JmlStock <= ($item->MinStock ?? 10) && $item->JmlStock > 0;
-                    $isEmpty = $item->JmlStock <= 0;
-                @endphp
-                <div class="product-card"
-                     data-kode="{{ $item->KodeBrg }}"
-                     data-nama="{{ $item->NamaBrg }}"
-                     data-harga="{{ $item->Harga1 }}"
-                     data-kategori="{{ $item->Jenis }}"
-                     onclick="tambahKeKeranjang('{{ $item->KodeBrg }}', '{{ addslashes($item->NamaBrg) }}', {{ $item->Harga1 }})">
-                    <div class="product-card-icon">🛍️</div>
-                    <div class="product-name">{{ $item->NamaBrg }}</div>
-                    <div class="product-barcode">{{ $item->KodeBrg }}</div>
-                    <div class="product-bottom-row">
-                        <span class="product-price">Rp {{ number_format($item->Harga1, 0, ',', '.') }}</span>
-                        @if($isEmpty)
-                            <span class="stock-badge critical">Habis</span>
-                        @elseif($isLow)
-                            <span class="stock-badge low">{{ $item->JmlStock }} {{ $item->SatKcl }}</span>
-                        @else
-                            <span class="stock-badge">{{ $item->JmlStock }} {{ $item->SatKcl }}</span>
+           @foreach ($barang as $item)
+            @php
+                $adaMultiSatuan = ($item->IsiBsr > 1 || $item->IsiSdg > 1);
+            @endphp
+            <div class="product-card"
+                data-kode="{{ $item->KodeBrg }}"
+                data-nama="{{ $item->NamaBrg }}"
+                data-harga-pcs="{{ $item->Harga1 }}"
+                data-sat-kcl="{{ $item->SatKcl }}"
+                data-harga-sdg="{{ $item->HrgSdg }}"
+                data-sat-sdg="{{ $item->SatSdg }}"
+                data-isi-sdg="{{ $item->IsiSdg }}"
+                data-harga-bsr="{{ $item->HrgBsr }}"
+                data-sat-bsr="{{ $item->SatBsr }}"
+                data-isi-bsr="{{ $item->IsiBsr }}">
+
+                <div class="product-name">{{ $item->NamaBrg }}</div>
+                <div class="product-price">Rp {{ number_format($item->Harga1, 0, ',', '.') }} / {{ $item->SatKcl }}</div>
+                <div class="product-stock">Stok: {{ $item->JmlStock }} {{ $item->SatKcl }}</div>
+
+                @if ($adaMultiSatuan)
+                    <div class="unit-picker">
+                        <button type="button" onclick="event.stopPropagation(); tambahDenganSatuan(this, 'kcl')">{{ $item->SatKcl }}</button>
+                        @if ($item->IsiSdg > 1)
+                            <button type="button" onclick="event.stopPropagation(); tambahDenganSatuan(this, 'sdg')">{{ $item->SatSdg }}</button>
+                        @endif
+                        @if ($item->IsiBsr > 1)
+                            <button type="button" onclick="event.stopPropagation(); tambahDenganSatuan(this, 'bsr')">{{ $item->SatBsr }}</button>
                         @endif
                     </div>
-                </div>
-            @endforeach
+                @endif
+            </div>
+        @endforeach
         </div>
     </div>
 

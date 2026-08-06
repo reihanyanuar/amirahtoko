@@ -3,24 +3,51 @@ let metodeBayarAktif = 'Tunai';
 
 // ==================== KERANJANG ====================
 
-// Fungsi tambah barang ke keranjang (dipanggil dari onclick di card)
-function tambahKeKeranjang(kode, nama, harga) {
-    const itemAda = cart.find(item => item.kode === kode);
+// Fungsi tambah barang ke keranjang (sekarang perlu info satuan)
+function tambahKeKeranjang(kode, nama, harga, satuan, isiPcs) {
+    const cartKey = kode + '-' + satuan; // supaya beda satuan = baris beda di keranjang
+    const itemAda = cart.find(item => item.cartKey === cartKey);
+
     if (itemAda) {
         itemAda.qty += 1;
     } else {
-        cart.push({ kode, nama, harga, qty: 1 });
+        cart.push({ cartKey, kode, nama, harga, satuan, isiPcs, qty: 1 });
     }
     renderKeranjang();
 }
 
+// Dipanggil dari tombol satuan di kartu produk
+function tambahDenganSatuan(btn, tipeSatuan) {
+    const card = btn.closest('.product-card');
+    const kode = card.dataset.kode;
+    const nama = card.dataset.nama;
+
+    let harga, satuan, isiPcs;
+
+    if (tipeSatuan === 'kcl') {
+        harga = parseFloat(card.dataset.hargaPcs);
+        satuan = card.dataset.satKcl;
+        isiPcs = 1;
+    } else if (tipeSatuan === 'sdg') {
+        harga = parseFloat(card.dataset.hargaSdg);
+        satuan = card.dataset.satSdg;
+        isiPcs = parseFloat(card.dataset.isiSdg);
+    } else if (tipeSatuan === 'bsr') {
+        harga = parseFloat(card.dataset.hargaBsr);
+        satuan = card.dataset.satBsr;
+        isiPcs = parseFloat(card.dataset.isiBsr);
+    }
+
+    tambahKeKeranjang(kode, nama, harga, satuan, isiPcs);
+}
+
 // Fungsi ubah jumlah (tombol +/-)
-function ubahQty(kode, delta) {
-    const item = cart.find(i => i.kode === kode);
+function ubahQty(cartKey, delta) {
+    const item = cart.find(i => i.cartKey === cartKey);
     if (!item) return;
     item.qty += delta;
     if (item.qty <= 0) {
-        cart = cart.filter(i => i.kode !== kode);
+        cart = cart.filter(i => i.cartKey !== cartKey);
     }
     renderKeranjang();
 }
@@ -52,20 +79,20 @@ function renderKeranjang() {
         total += subtotal;
 
         html += `
-            <div class="cart-item">
-                <div style="flex:1;min-width:0">
-                    <div class="ci-name">${item.nama}</div>
-                    <div class="ci-sub">Rp ${formatRupiah(item.harga)} × ${item.qty}</div>
+        <div class="cart-item">
+            <div style="flex:1;min-width:0">
+                <div class="ci-name">${item.nama} <span style="color:#98A2B3;font-weight:400">(${item.satuan})</span></div>
+                <div class="ci-sub">Rp ${formatRupiah(item.harga)} × ${item.qty}</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:10px">
+                <div class="qty-ctl">
+                    <button onclick="ubahQty('${item.cartKey}', -1)">−</button>
+                    <span>${item.qty}</span>
+                    <button onclick="ubahQty('${item.cartKey}', 1)">+</button>
                 </div>
-                <div style="display:flex;align-items:center;gap:10px">
-                    <div class="qty-ctl">
-                        <button onclick="ubahQty('${item.kode}', -1)">−</button>
-                        <span>${item.qty}</span>
-                        <button onclick="ubahQty('${item.kode}', 1)">+</button>
-                    </div>
-                    <div class="ci-price">Rp ${formatRupiah(subtotal)}</div>
-                </div>
-            </div>`;
+                <div class="ci-price">Rp ${formatRupiah(subtotal)}</div>
+            </div>
+        </div>`;
     });
 
     cartItemsEl.innerHTML = html;
