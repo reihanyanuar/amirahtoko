@@ -1,106 +1,455 @@
-.admin-grid-2 {
-    display: grid;
-    grid-template-columns: 1fr 1.3fr;
-    gap: 20px;
-    align-items: start;
+/* ============================================================
+   STYLING HALAMAN ADMIN (MODERN UI/UX MATCHING FIGMA DESIGN)
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   OVERRIDE AKSEN WARNA BIRU KHUSUS ADMIN
+   ------------------------------------------------------------ */
+.sidebar .brand-logo {
+    background: linear-gradient(135deg, #2563EB, #60A5FA) !important;
 }
 
+.sidebar .user-avatar {
+    background: linear-gradient(135deg, #2563EB, #3B82F6) !important;
+}
+
+.sidebar .user-role {
+    color: #60A5FA !important;
+}
+
+.sidebar .nav-item.active {
+    background: #2563EB !important;
+    color: #FFFFFF !important;
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3) !important;
+}
+
+.sidebar .nav-item.active .nav-icon {
+    color: #FFFFFF !important;
+}
+
+/* ------------------------------------------------------------
+   HEADER PAGE & ACTION BUTTONS
+   ------------------------------------------------------------ */
+.page-head-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.page-head-title {
+    font-size: 22px;
+    font-weight: 800;
+    color: #0F172A;
+    letter-spacing: -0.4px;
+}
+
+.page-head-sub {
+    font-size: 14px;
+    color: #64748B;
+    margin-top: 2px;
+    font-weight: 500;
+}
+
+.btn-add-green {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: linear-gradient(135deg, #16A34A, #22C55E);
+    color: #FFFFFF;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 18px;
+    font-weight: 700;
+    font-size: 14.5px;
+    font-family: inherit;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(22, 163, 74, 0.25);
+    transition: all 0.2s ease;
+    text-decoration: none;
+}
+
+.btn-add-green:hover {
+    background: linear-gradient(135deg, #15803D, #16A34A);
+    box-shadow: 0 6px 18px rgba(22, 163, 74, 0.35);
+    transform: translateY(-1px);
+}
+
+.btn-add-blue {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: linear-gradient(135deg, #2563EB, #3B82F6);
+    color: #FFFFFF;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 18px;
+    font-weight: 700;
+    font-size: 14.5px;
+    font-family: inherit;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+    transition: all 0.2s ease;
+    text-decoration: none;
+}
+
+.btn-add-blue:hover {
+    background: linear-gradient(135deg, #1D4ED8, #2563EB);
+    box-shadow: 0 6px 18px rgba(37, 99, 235, 0.35);
+    transform: translateY(-1px);
+}
+
+/* ------------------------------------------------------------
+   ADMIN SEARCH BAR
+   ------------------------------------------------------------ */
+.admin-search-wrap {
+    position: relative;
+    margin-bottom: 18px;
+    max-width: 380px;
+}
+
+.admin-search-wrap .search-icon {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 15px;
+    color: #94A3B8;
+    pointer-events: none;
+}
+
+.admin-search-wrap input {
+    width: 100%;
+    padding: 11px 14px 11px 42px;
+    border: 1.5px solid #E2E8F0;
+    border-radius: 10px;
+    font-size: 14.5px;
+    font-family: inherit;
+    background: #FFFFFF;
+    color: #0F172A;
+    transition: all 0.15s ease;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.admin-search-wrap input:focus {
+    outline: none;
+    border-color: #2563EB;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+}
+
+/* ------------------------------------------------------------
+   CONTAINER & TABLE STYLING
+   ------------------------------------------------------------ */
 .admin-card {
-    background: #fff;
-    border-radius: 12px;
-    border: 1px solid #E1E6EE;
-    padding: 20px;
+    background: #FFFFFF;
+    border-radius: 14px;
+    border: 1.5px solid #E2E8F0;
+    padding: 24px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
 }
 
 .admin-card h3 {
+    font-size: 18px;
+    font-weight: 800;
+    margin-bottom: 18px;
+    color: #0F172A;
+    letter-spacing: -0.3px;
+}
+
+/* Table Enhancements */
+.table-container {
+    background: #FFFFFF;
+    border-radius: 14px;
+    border: 1.5px solid #E2E8F0;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+}
+
+.table-container .table th {
+    background: #F8FAFC;
+    color: #64748B;
+    font-size: 12.5px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    padding: 14px 18px;
+}
+
+.table-container .table td {
+    padding: 15px 18px;
+    font-size: 14.5px;
+    color: #1E293B;
+    vertical-align: middle;
+}
+
+/* ------------------------------------------------------------
+   BADGES & PILLS
+   ------------------------------------------------------------ */
+.badge-kat {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12.5px;
+    font-weight: 700;
+    letter-spacing: 0.2px;
+}
+
+.badge-kat-minuman       { background: #E0F2FE; color: #0369A1; }
+.badge-kat-makanan       { background: #FFEDD5; color: #C2410C; }
+.badge-kat-snack         { background: #FCE7F3; color: #BE185D; }
+.badge-kat-sembako       { background: #FEF3C7; color: #B45309; }
+.badge-kat-personal-care { background: #E6F4EA; color: #137333; }
+.badge-kat-rokok         { background: #F1F5F9; color: #475569; }
+.badge-kat-default       { background: #F1F5F9; color: #475569; }
+
+/* ------------------------------------------------------------
+   ACTION BUTTONS
+   ------------------------------------------------------------ */
+.btn-icon-action {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
     font-size: 15px;
+    transition: background 0.15s;
+    text-decoration: none;
+}
+
+.btn-icon-action.edit { color: #2563EB; }
+.btn-icon-action.edit:hover { background: #EFF6FF; }
+
+.btn-icon-action.delete { color: #DC2626; }
+.btn-icon-action.delete:hover { background: #FEF2F2; }
+
+/* ------------------------------------------------------------
+   KATEGORI CARDS GRID (FIGMA STYLE)
+   ------------------------------------------------------------ */
+.category-card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 16px;
+}
+
+.category-item-card {
+    background: #FFFFFF;
+    border: 1.5px solid #E2E8F0;
+    border-radius: 14px;
+    padding: 18px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: all 0.2s ease;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.category-item-card:hover {
+    border-color: #2563EB;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(37, 99, 235, 0.1);
+}
+
+.cat-card-left {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.cat-card-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+}
+
+.cat-card-name {
+    font-size: 15px;
+    font-weight: 700;
+    color: #0F172A;
+    margin-bottom: 2px;
+}
+
+.cat-card-count {
+    font-size: 13px;
+    color: #64748B;
+    font-weight: 500;
+}
+
+/* ------------------------------------------------------------
+   MODAL OVERLAY (FOR POPUP FORMS)
+   ------------------------------------------------------------ */
+.admin-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.5);
+    backdrop-filter: blur(4px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 20px;
+}
+
+.admin-modal-overlay.show {
+    display: flex;
+}
+
+.admin-modal-box {
+    background: #FFFFFF;
+    border-radius: 18px;
+    padding: 28px;
+    width: 100%;
+    max-width: 640px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+    animation: modalIn 0.2s ease;
+}
+
+@keyframes modalIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95) translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+.admin-modal-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #F1F5F9;
+    padding-bottom: 14px;
+}
+
+.admin-modal-title {
+    font-size: 19px;
+    font-weight: 800;
+    color: #0F172A;
+}
+
+.admin-modal-close {
+    background: none;
+    border: none;
+    font-size: 22px;
+    color: #94A3B8;
+    cursor: pointer;
+    transition: color 0.15s;
+}
+
+.admin-modal-close:hover {
+    color: #0F172A;
+}
+
+/* ------------------------------------------------------------
+   FILTER TABS FOR RIWAYAT TRANSAKSI
+   ------------------------------------------------------------ */
+.filter-bar-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     margin-bottom: 16px;
-    color: #16233D;
+    flex-wrap: wrap;
+    gap: 12px;
 }
 
-.admin-card .section-divider {
-    border-top: 1px dashed #E1E6EE;
-    margin: 16px 0;
-    padding-top: 16px;
+.filter-pills-group {
+    display: flex;
+    gap: 6px;
 }
 
-.admin-card .field-hint {
-    font-size: 11.5px;
-    color: #98A2B3;
-    margin-top: -10px;
-    margin-bottom: 14px;
+.filter-pill-btn {
+    padding: 7px 16px;
+    border-radius: 20px;
+    border: 1.5px solid #E2E8F0;
+    background: #FFFFFF;
+    font-size: 13.5px;
+    font-weight: 600;
+    color: #64748B;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    font-family: inherit;
 }
 
+.filter-pill-btn:hover {
+    border-color: #2563EB;
+    color: #2563EB;
+}
+
+.filter-pill-btn.active {
+    background: #2563EB;
+    color: #FFFFFF;
+    border-color: #2563EB;
+}
+
+/* Form controls */
 .form-row {
-    margin-bottom: 14px;
+    margin-bottom: 16px;
 }
 
 .form-row label {
     display: block;
-    font-size: 12.5px;
+    font-size: 13.5px;
     font-weight: 600;
-    color: #667085;
-    margin-bottom: 5px;
+    color: #475569;
+    margin-bottom: 6px;
 }
 
 .form-row input,
 .form-row select {
     width: 100%;
-    padding: 9px 11px;
-    border: 1px solid #D7DEE9;
-    border-radius: 7px;
-    font-size: 13px;
+    padding: 11px 13px;
+    border: 1.5px solid #E2E8F0;
+    border-radius: 9px;
+    font-size: 15px;
+    font-family: inherit;
+    color: #0F172A;
+    background: #FFFFFF;
+    transition: all 0.15s ease;
+}
+
+.form-row input:focus,
+.form-row select:focus {
+    outline: none;
+    border-color: #2563EB !important;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15) !important;
 }
 
 .form-row-two {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 10px;
+    gap: 12px;
 }
 
 .btn-simpan {
     width: 100%;
-    padding: 12px;
-    background: #16233D;
-    color: #fff;
+    padding: 13px;
+    background: linear-gradient(135deg, #2563EB, #3B82F6) !important;
+    color: #FFFFFF;
     border: none;
-    border-radius: 8px;
-    font-weight: 600;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 15px;
+    font-family: inherit;
     cursor: pointer;
-    margin-top: 4px;
+    margin-top: 8px;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 14px rgba(37, 99, 235, 0.3) !important;
 }
 
-.admin-alert {
-    border-radius: 8px;
-    padding: 12px 16px;
-    margin-bottom: 16px;
-    font-size: 13px;
-}
-
-.admin-alert.success {
-    background: #ECFDF3;
-    border: 1px solid #16A34A;
-    color: #15803D;
-}
-
-.admin-alert.error {
-    background: #FEE2E2;
-    border: 1px solid #DC2626;
-    color: #B91C1C;
-}
-
-.chip-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-}
-
-.chip {
-    background: #F2F5F9;
-    border: 1px solid #E1E6EE;
-    padding: 6px 12px;
-    border-radius: 20px;
-    font-size: 12px;
-    font-weight: 600;
-    color: #334155;
+.btn-simpan:hover {
+    background: linear-gradient(135deg, #1D4ED8, #2563EB) !important;
+    box-shadow: 0 6px 20px rgba(37, 99, 235, 0.4) !important;
+    transform: translateY(-1px);
 }

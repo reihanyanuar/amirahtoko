@@ -41,6 +41,37 @@ function tambahDenganSatuan(btn, tipeSatuan) {
     tambahKeKeranjang(kode, nama, harga, satuan, isiPcs);
 }
 
+// Proses scan barcode dari kotak pencarian
+function prosesScan(barcodeInput) {
+    const kode = barcodeInput.trim();
+    if (!kode) return;
+
+    const cards = document.querySelectorAll('.product-card');
+    let ditemukan = false;
+
+    for (const card of cards) {
+        if (card.dataset.kode === kode) {
+            tambahKeKeranjang(card.dataset.kode, card.dataset.nama, parseFloat(card.dataset.hargaPcs), card.dataset.satKcl, 1);
+            ditemukan = true;
+            break;
+        }
+        if (card.dataset.kodeSdg === kode && parseFloat(card.dataset.isiSdg) > 1) {
+            tambahKeKeranjang(card.dataset.kode, card.dataset.nama, parseFloat(card.dataset.hargaSdg), card.dataset.satSdg, parseFloat(card.dataset.isiSdg));
+            ditemukan = true;
+            break;
+        }
+        if (card.dataset.kodeBsr === kode && parseFloat(card.dataset.isiBsr) > 1) {
+            tambahKeKeranjang(card.dataset.kode, card.dataset.nama, parseFloat(card.dataset.hargaBsr), card.dataset.satBsr, parseFloat(card.dataset.isiBsr));
+            ditemukan = true;
+            break;
+        }
+    }
+
+    if (!ditemukan) {
+        showToast('Barcode "' + kode + '" tidak ditemukan', 'error');
+    }
+}
+
 // Fungsi ubah jumlah (tombol +/-)
 function ubahQty(cartKey, delta) {
     const item = cart.find(i => i.cartKey === cartKey);
@@ -225,12 +256,25 @@ function prosesPayment() {
         });
 }
 
-// Tutup modal kalau klik area luar (overlay)
+// Tutup modal kalau klik area luar (overlay) & listener search barcode
 document.addEventListener('DOMContentLoaded', function () {
     const overlay = document.getElementById('modalBayar');
     if (overlay) {
         overlay.addEventListener('click', function (e) {
             if (e.target === this) closeModalBayar();
+        });
+    }
+
+    const inputCari = document.getElementById('cariBarang');
+    if (inputCari) {
+        inputCari.addEventListener('keydown', function (e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                if (typeof prosesScan === 'function') {
+                    prosesScan(this.value);
+                }
+                this.value = '';
+            }
         });
     }
 });

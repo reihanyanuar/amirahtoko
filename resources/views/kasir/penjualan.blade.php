@@ -27,39 +27,41 @@
 
         {{-- Product Grid --}}
         <div class="product-grid" id="productGrid">
-           @foreach ($barang as $item)
-            @php
-                $adaMultiSatuan = ($item->IsiBsr > 1 || $item->IsiSdg > 1);
-            @endphp
-            <div class="product-card"
-                data-kode="{{ $item->KodeBrg }}"
-                data-nama="{{ $item->NamaBrg }}"
-                data-harga-pcs="{{ $item->Harga1 }}"
-                data-sat-kcl="{{ $item->SatKcl }}"
-                data-harga-sdg="{{ $item->HrgSdg }}"
-                data-sat-sdg="{{ $item->SatSdg }}"
-                data-isi-sdg="{{ $item->IsiSdg }}"
-                data-harga-bsr="{{ $item->HrgBsr }}"
-                data-sat-bsr="{{ $item->SatBsr }}"
-                data-isi-bsr="{{ $item->IsiBsr }}">
+            @foreach ($barang as $item)
+                @php $adaMultiSatuan = ($item->IsiBsr > 1 || $item->IsiSdg > 1); @endphp
+               <div class="product-card"
+                    data-jenis="{{ $item->Jenis }}"
+                    @if(!$adaMultiSatuan) onclick="tambahKeKeranjang('{{ $item->KodeBrg }}', '{{ $item->NamaBrg }}', {{ $item->Harga1 }}, '{{ $item->SatKcl }}', 1)" @endif
+                    data-kode="{{ $item->KodeBrg }}"
+                    data-kode-sdg="{{ $item->KodeSdg }}"
+                    data-kode-bsr="{{ $item->KodeBsr }}"
+                    data-nama="{{ $item->NamaBrg }}"
+                    data-harga-pcs="{{ $item->Harga1 }}"
+                    data-sat-kcl="{{ $item->SatKcl }}"
+                    data-harga-sdg="{{ $item->HrgSdg }}"
+                    data-sat-sdg="{{ $item->SatSdg }}"
+                    data-isi-sdg="{{ $item->IsiSdg }}"
+                    data-harga-bsr="{{ $item->HrgBsr }}"
+                    data-sat-bsr="{{ $item->SatBsr }}"
+                    data-isi-bsr="{{ $item->IsiBsr }}">
 
-                <div class="product-name">{{ $item->NamaBrg }}</div>
-                <div class="product-price">Rp {{ number_format($item->Harga1, 0, ',', '.') }} / {{ $item->SatKcl }}</div>
-                <div class="product-stock">Stok: {{ $item->JmlStock }} {{ $item->SatKcl }}</div>
+                    <div class="product-name">{{ $item->NamaBrg }}</div>
+                    <div class="product-price">Rp {{ number_format($item->Harga1, 0, ',', '.') }} / {{ $item->SatKcl }}</div>
+                    <div class="product-stock">Stok: {{ $item->JmlStock }} {{ $item->SatKcl }}</div>
 
-                @if ($adaMultiSatuan)
-                    <div class="unit-picker">
-                        <button type="button" onclick="event.stopPropagation(); tambahDenganSatuan(this, 'kcl')">{{ $item->SatKcl }}</button>
-                        @if ($item->IsiSdg > 1)
-                            <button type="button" onclick="event.stopPropagation(); tambahDenganSatuan(this, 'sdg')">{{ $item->SatSdg }}</button>
-                        @endif
-                        @if ($item->IsiBsr > 1)
-                            <button type="button" onclick="event.stopPropagation(); tambahDenganSatuan(this, 'bsr')">{{ $item->SatBsr }}</button>
-                        @endif
-                    </div>
-                @endif
-            </div>
-        @endforeach
+                    @if ($adaMultiSatuan)
+                        <div class="unit-picker">
+                            <button type="button" onclick="event.stopPropagation(); tambahDenganSatuan(this, 'kcl')">{{ $item->SatKcl }}</button>
+                            @if ($item->IsiSdg > 1)
+                                <button type="button" onclick="event.stopPropagation(); tambahDenganSatuan(this, 'sdg')">{{ $item->SatSdg }}</button>
+                            @endif
+                            @if ($item->IsiBsr > 1)
+                                <button type="button" onclick="event.stopPropagation(); tambahDenganSatuan(this, 'bsr')">{{ $item->SatBsr }}</button>
+                            @endif
+                        </div>
+                    @endif
+                </div>
+            @endforeach
         </div>
     </div>
 
@@ -159,7 +161,7 @@ function filterKategori(btn, kat) {
     document.querySelectorAll('.category-chip').forEach(c => c.classList.remove('active'));
     btn.classList.add('active');
     document.querySelectorAll('.product-card').forEach(card => {
-        const match = kat === '' || card.dataset.kategori === kat;
+        const match = kat === '' || card.dataset.jenis === kat;
         card.style.display = match ? '' : 'none';
     });
 }

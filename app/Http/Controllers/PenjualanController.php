@@ -51,14 +51,14 @@ class PenjualanController extends Controller
         $jumlahItem = count($items);
 
         foreach ($items as $index => $item) {
-        $barang = Barang::find($item['kode']);
-        $totalHargaBaris = $item['harga'] * $item['qty'];
-        $isBarisTerakhir = $index === $jumlahItem - 1;
+    $barang = Barang::find($item['kode']);
+    $totalHargaBaris = $item['harga'] * $item['qty'];
+    $isBarisTerakhir = $index === $jumlahItem - 1;
 
-        $isiPcs = $item['isiPcs'] ?? 1;
-        $qtyDalamPcs = $item['qty'] * $isiPcs;
+    $isiPcs = $item['isiPcs'] ?? 1;
+    $qtyDalamPcs = $item['qty'] * $isiPcs;
 
-        Penjualan::create([
+    Penjualan::create([
             'NoNota'      => $noNota,
             'Tanggal'     => $tanggal,
             'Jam'         => $jam,

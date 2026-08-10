@@ -34,8 +34,8 @@ class AdminController extends Controller
 
         Barang::create([
             'KodeBrg'  => $request->KodeBrg,
-            'KodeSdg'  => $request->KodeBrg ?: $request->KodeBsr,
-            'KodeBsr'  => $request->KodeBrg ?: $request->KodeSdg,
+            'KodeSdg'  => $request->KodeSdg ?: $request->KodeBrg,
+            'KodeBsr'  => $request->KodeBsr ?: $request->KodeBrg,
             'NamaBrg'  => $request->NamaBrg,
             'NamaSup'  => $request->NamaSup,
             'Jenis'    => $request->Jenis,
@@ -61,18 +61,95 @@ class AdminController extends Controller
         return redirect('/admin/barang')->with('sukses', 'Barang "' . $request->NamaBrg . '" berhasil ditambahkan.');
     }
 
+    public function editBarang($kode)
+    {
+        $barang = Barang::findOrFail($kode);
+        $supplier = Supplier::all();
+        $kategoriList = Barang::select('Jenis')->distinct()->whereNotNull('Jenis')->pluck('Jenis');
+
+        return view('admin.barang-edit', compact('barang', 'supplier', 'kategoriList'));
+    }
+
+    public function updateBarang(Request $request, $kode)
+    {
+        $barang = Barang::findOrFail($kode);
+
+        $barang->update([
+            'NamaBrg'  => $request->NamaBrg,
+            'NamaSup'  => $request->NamaSup,
+            'Jenis'    => $request->Jenis,
+            'IsiBsr'   => $request->IsiBsr ?: 1,
+            'IsiSdg'   => $request->IsiSdg ?: 1,
+            'SatBsr'   => $request->SatBsr ?: $barang->SatKcl,
+            'SatSdg'   => $request->SatSdg ?: $barang->SatKcl,
+            'SatKcl'   => $request->SatKcl ?: 'Pcs',
+            'KodeBsr'  => $request->KodeBsr ?: $kode,
+            'KodeSdg'  => $request->KodeSdg ?: $kode,
+            'HppBsr'   => $request->HppBsr ?: $request->Hpp,
+            'HppSdg'   => $request->HppSdg ?: $request->Hpp,
+            'Hpp'      => $request->Hpp,
+            'HrgBsr'   => $request->HrgBsr ?: $request->Harga1,
+            'HrgSdg'   => $request->HrgSdg ?: $request->Harga1,
+            'Harga1'   => $request->Harga1,
+            'Harga2'   => $request->Harga2 ?: $request->Harga1,
+            'Limit2'   => $request->Limit2 ?: 0,
+            'Harga3'   => $request->Harga3 ?: $request->Harga1,
+            'Limit3'   => $request->Limit3 ?: 0,
+            'JmlStock' => $request->JmlStock,
+            'Catatan'  => $request->Catatan ?: '-',
+        ]);
+
+        return redirect('/admin/barang')->with('sukses', 'Barang "' . $barang->NamaBrg . '" berhasil diperbarui.');
+    }
+
+    public function hapusBarang($kode)
+    {
+        $barang = Barang::findOrFail($kode);
+        $nama = $barang->NamaBrg;
+        $barang->delete();
+
+        return redirect('/admin/barang')->with('sukses', 'Barang "' . $nama . '" berhasil dihapus.');
+    }
+
+    public function editSupplier($kode)
+    {
+        $supplier = Supplier::findOrFail($kode);
+        return view('admin.supplier-edit', compact('supplier'));
+    }
+
+    public function updateSupplier(Request $request, $kode)
+    {
+        $supplier = Supplier::findOrFail($kode);
+
+        $supplier->update([
+            'NamaSup' => $request->NamaSup,
+            'Alamat'  => $request->Alamat,
+        ]);
+
+        return redirect('/admin/supplier')->with('sukses', 'Supplier "' . $supplier->NamaSup . '" berhasil diperbarui.');
+    }
+
+    public function hapusSupplier($kode)
+    {
+        $supplier = Supplier::findOrFail($kode);
+        $nama = $supplier->NamaSup;
+        $supplier->delete();
+
+        return redirect('/admin/supplier')->with('sukses', 'Supplier "' . $nama . '" berhasil dihapus.');
+    }
+
     // ============ KATEGORI PRODUK ============
     // Catatan: kategori diambil dari nilai unik kolom Jenis di tabel barang,
     // BUKAN dari tabel jenisbarang terpisah (struktur kolomnya belum dikonfirmasi).
 
     public function kategori()
     {
-        $kategoriList = Barang::select('Jenis')
-            ->distinct()
+        $kategoriList = Barang::select('Jenis', DB::raw('COUNT(*) as total_produk'))
             ->whereNotNull('Jenis')
             ->where('Jenis', '!=', '')
+            ->groupBy('Jenis')
             ->orderBy('Jenis')
-            ->pluck('Jenis');
+            ->get();
 
         return view('admin.kategori', compact('kategoriList'));
     }
