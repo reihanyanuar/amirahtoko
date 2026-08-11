@@ -21,14 +21,36 @@ class AdminController extends Controller
         return view('admin.barang', compact('barang', 'supplier', 'kategoriList'));
     }
 
+    public function tambahBarang()
+    {
+        $supplier = Supplier::all();
+        $kategoriList = Barang::select('Jenis')->distinct()->whereNotNull('Jenis')->pluck('Jenis');
+
+        return view('admin.barang-tambah', compact('supplier', 'kategoriList'));
+    }
+
     public function simpanBarang(Request $request)
     {
+        $messages = [
+            'KodeBrg.required' => 'Kode Barang wajib diisi!',
+            'KodeBrg.unique'   => 'Kode Barang sudah terdaftar, gunakan kode lain!',
+            'NamaBrg.required' => 'Nama Barang wajib diisi!',
+            'NamaSup.required' => 'Supplier wajib dipilih!',
+            'Jenis.required'   => 'Jenis Kategori wajib diisi!',
+            'Hpp.required'     => 'HPP Pcs / Modal wajib diisi!',
+            'Hpp.numeric'      => 'HPP Pcs / Modal harus berupa angka!',
+            'Harga1.required'  => 'Harga Pcs Utama / Jual wajib diisi!',
+            'Harga1.numeric'   => 'Harga Pcs Utama / Jual harus berupa angka!',
+        ];
+
         $request->validate([
             'KodeBrg' => 'required|unique:barang,KodeBrg',
             'NamaBrg' => 'required',
+            'NamaSup' => 'required',
+            'Jenis'   => 'required',
             'Hpp'     => 'required|numeric',
             'Harga1'  => 'required|numeric',
-        ]);
+        ], $messages);
 
         $satuanKecil = $request->SatKcl ?: 'Pcs';
 
@@ -73,6 +95,24 @@ class AdminController extends Controller
     public function updateBarang(Request $request, $kode)
     {
         $barang = Barang::findOrFail($kode);
+
+        $messages = [
+            'NamaBrg.required' => 'Nama Barang wajib diisi!',
+            'NamaSup.required' => 'Supplier wajib dipilih!',
+            'Jenis.required'   => 'Jenis Kategori wajib diisi!',
+            'Hpp.required'     => 'HPP Pcs / Modal wajib diisi!',
+            'Hpp.numeric'      => 'HPP Pcs / Modal harus berupa angka!',
+            'Harga1.required'  => 'Harga Pcs Utama / Jual wajib diisi!',
+            'Harga1.numeric'   => 'Harga Pcs Utama / Jual harus berupa angka!',
+        ];
+
+        $request->validate([
+            'NamaBrg' => 'required',
+            'NamaSup' => 'required',
+            'Jenis'   => 'required',
+            'Hpp'     => 'required|numeric',
+            'Harga1'  => 'required|numeric',
+        ], $messages);
 
         $barang->update([
             'NamaBrg'  => $request->NamaBrg,

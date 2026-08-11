@@ -38,14 +38,14 @@
 }
 
 .page-head-title {
-    font-size: 22px;
+    font-size: 24px;
     font-weight: 800;
     color: #0F172A;
     letter-spacing: -0.4px;
 }
 
 .page-head-sub {
-    font-size: 14px;
+    font-size: 15px;
     color: #64748B;
     margin-top: 2px;
     font-weight: 500;
@@ -61,7 +61,7 @@
     border-radius: 10px;
     padding: 10px 18px;
     font-weight: 700;
-    font-size: 14.5px;
+    font-size: 15.5px;
     font-family: inherit;
     cursor: pointer;
     box-shadow: 0 4px 12px rgba(22, 163, 74, 0.25);
@@ -85,7 +85,7 @@
     border-radius: 10px;
     padding: 10px 18px;
     font-weight: 700;
-    font-size: 14.5px;
+    font-size: 15.5px;
     font-family: inherit;
     cursor: pointer;
     box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
@@ -123,7 +123,7 @@
     padding: 11px 14px 11px 42px;
     border: 1.5px solid #E2E8F0;
     border-radius: 10px;
-    font-size: 14.5px;
+    font-size: 16px;
     font-family: inherit;
     background: #FFFFFF;
     color: #0F172A;
@@ -168,7 +168,7 @@
 .table-container .table th {
     background: #F8FAFC;
     color: #64748B;
-    font-size: 12.5px;
+    font-size: 13px;
     font-weight: 700;
     letter-spacing: 0.5px;
     padding: 14px 18px;
@@ -176,7 +176,7 @@
 
 .table-container .table td {
     padding: 15px 18px;
-    font-size: 14.5px;
+    font-size: 16px;
     color: #1E293B;
     vertical-align: middle;
 }
@@ -188,7 +188,7 @@
     display: inline-block;
     padding: 4px 12px;
     border-radius: 20px;
-    font-size: 12.5px;
+    font-size: 13.5px;
     font-weight: 700;
     letter-spacing: 0.2px;
 }
@@ -400,7 +400,7 @@
 
 .form-row label {
     display: block;
-    font-size: 13.5px;
+    font-size: 15px;
     font-weight: 600;
     color: #475569;
     margin-bottom: 6px;
@@ -452,4 +452,587 @@
     background: linear-gradient(135deg, #1D4ED8, #2563EB) !important;
     box-shadow: 0 6px 20px rgba(37, 99, 235, 0.4) !important;
     transform: translateY(-1px);
+}
+
+/* ============================================================
+   DESKTOP POS LAYOUT — INPUT BARANG (MATCHING VB DEKSTOP UI)
+   ============================================================ */
+.pos-barang-split-container {
+    display: grid;
+    grid-template-columns: 480px 1fr;
+    gap: 16px;
+    align-items: start;
+    margin-top: -10px;
+}
+
+@media (max-width: 1200px) {
+    .pos-barang-split-container {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* LEFT FORM PANEL */
+.pos-form-panel {
+    background: #FFFFFF;
+    border: 1.5px solid #CBD5E1;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.pos-panel-header {
+    background: linear-gradient(135deg, #2563EB, #1D4ED8);
+    color: #FFFFFF;
+    padding: 10px 16px;
+    font-size: 17px;
+    font-weight: 800;
+    letter-spacing: 0.3px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.pos-form-body {
+    padding: 12px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    max-height: calc(100vh - 165px);
+    overflow-y: auto;
+}
+
+.pos-form-row {
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    align-items: center;
+    gap: 8px;
+}
+
+.pos-form-row.two-cols {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+}
+
+.pos-col {
+    display: grid;
+    grid-template-columns: 110px 1fr;
+    align-items: center;
+    gap: 6px;
+}
+
+.pos-lbl {
+    font-size: 13.5px;
+    font-weight: 600;
+    color: #1E293B;
+    white-space: nowrap;
+}
+
+.pos-inp {
+    width: 100%;
+    padding: 5px 9px;
+    border: 1.5px solid #CBD5E1;
+    border-radius: 6px;
+    font-size: 14px;
+    font-family: inherit;
+    color: #0F172A;
+    background: #FFFFFF;
+    transition: all 0.15s ease;
+}
+
+.pos-inp:focus {
+    outline: none;
+    border-color: #2563EB !important;
+    box-shadow: 0 0 0 2.5px rgba(37, 99, 235, 0.2) !important;
+    background: #EFF6FF;
+}
+
+.pos-inp.readonly {
+    background: #F1F5F9;
+    color: #0F172A;
+    font-weight: 800;
+}
+
+.pos-input-group {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+}
+
+.pos-btn-mini {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 6px;
+    font-size: 12.5px;
+    font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.pos-btn-mini.green {
+    background: #DCFCE7;
+    color: #15803D;
+    border: 1px solid #86EFAC;
+}
+
+.pos-input-suffix {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.suffix-lbl {
+    font-size: 13.5px;
+    font-weight: 700;
+    color: #2563EB;
+    white-space: nowrap;
+}
+
+/* FORM FOOTER BUTTONS */
+.pos-form-footer {
+    background: #F8FAFC;
+    border-top: 1.5px solid #E2E8F0;
+    padding: 8px 12px;
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+
+.pos-btn {
+    padding: 7px 12px;
+    border: 1.5px solid #CBD5E1;
+    border-radius: 6px;
+    background: #FFFFFF;
+    color: #1E293B;
+    font-size: 13.5px;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.15s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.pos-btn:hover {
+    background: #F1F5F9;
+    border-color: #94A3B8;
+}
+
+.pos-btn.primary {
+    background: #2563EB;
+    color: #FFFFFF;
+    border-color: #1D4ED8;
+}
+
+.pos-btn.primary:hover {
+    background: #1D4ED8;
+}
+
+.pos-btn.danger {
+    background: #DC2626;
+    color: #FFFFFF;
+    border-color: #B91C1C;
+}
+
+.pos-btn.danger:hover {
+    background: #B91C1C;
+}
+
+.pos-btn.warning {
+    background: #F59E0B;
+    color: #FFFFFF;
+    border-color: #D97706;
+}
+
+.pos-btn.warning:hover {
+    background: #D97706;
+}
+
+/* RIGHT TABLE PANEL */
+.pos-table-panel {
+    background: #FFFFFF;
+    border: 1.5px solid #CBD5E1;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 110px);
+}
+
+.pos-filter-bar {
+    background: #F8FAFC;
+    border-bottom: 1.5px solid #E2E8F0;
+    padding: 10px 14px;
+    display: flex;
+    gap: 16px;
+}
+
+.pos-filter-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex: 1;
+}
+
+.pos-filter-item label {
+    font-size: 13.5px;
+    font-weight: 700;
+    color: #334155;
+    white-space: nowrap;
+}
+
+.pos-filter-item input,
+.pos-filter-item select {
+    width: 100%;
+    padding: 6px 10px;
+    border: 1.5px solid #CBD5E1;
+    border-radius: 6px;
+    font-size: 14px;
+    font-family: inherit;
+}
+
+.pos-table-scroll {
+    flex: 1;
+    overflow: auto;
+}
+
+.pos-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.pos-table th {
+    position: sticky;
+    top: 0;
+    background: #E2E8F0;
+    color: #0F172A;
+    font-size: 13px;
+    font-weight: 700;
+    padding: 8px 10px;
+    border-bottom: 2px solid #CBD5E1;
+    text-transform: none;
+    letter-spacing: 0;
+    white-space: nowrap;
+}
+
+.pos-table td {
+    padding: 7px 10px;
+    font-size: 14px;
+    border-bottom: 1px solid #F1F5F9;
+    white-space: nowrap;
+}
+
+.pos-row {
+    cursor: pointer;
+    transition: background 0.1s ease;
+}
+
+.pos-row:hover {
+    background: #EFF6FF !important;
+}
+
+.pos-row.selected {
+    background: #DBEAFE !important;
+    font-weight: 600;
+}
+
+.status-icon.green {
+    color: #16A34A;
+    font-weight: bold;
+}
+
+.pos-table-footer {
+    background: #1E293B;
+    color: #F1F5F9;
+    padding: 8px 16px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+/* ============================================================
+   VB-STYLE COMPACT FORM (TAMBAH / EDIT BARANG TANPA SCROLL)
+   ============================================================ */
+.vb-form-card {
+    background: #FFFFFF;
+    border: 1.5px solid #CBD5E1;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+    margin-top: -4px;
+}
+
+.vb-card-header {
+    background: linear-gradient(135deg, #2563EB, #1D4ED8);
+    color: #FFFFFF;
+    padding: 10px 16px;
+    font-size: 17px;
+    font-weight: 800;
+    letter-spacing: 0.3px;
+}
+
+.vb-form-grid-2col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    padding: 16px 18px 12px;
+}
+
+@media (max-width: 1024px) {
+    .vb-form-grid-2col {
+        grid-template-columns: 1fr;
+    }
+}
+
+.vb-col-section {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.vb-row {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.vb-row-two {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.vb-subcol {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.vb-lbl {
+    font-size: 13.5px;
+    font-weight: 600;
+    color: #334155;
+    white-space: normal;
+}
+
+.vb-inp {
+    width: 100%;
+    padding: 5px 9px;
+    border: 1.5px solid #CBD5E1;
+    border-radius: 6px;
+    font-size: 14px;
+    font-family: inherit;
+    color: #0F172A;
+    background: #FFFFFF;
+    transition: all 0.15s ease;
+}
+
+.vb-inp:focus {
+    outline: none;
+    border-color: #2563EB !important;
+    box-shadow: 0 0 0 2.5px rgba(37, 99, 235, 0.2) !important;
+    background: #EFF6FF;
+}
+
+.vb-inp.readonly {
+    background: #F1F5F9;
+    color: #0F172A;
+    font-weight: 800;
+}
+
+.vb-input-group {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+}
+
+.vb-btn-mini {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 6px;
+    font-size: 12.5px;
+    font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.vb-btn-mini.green {
+    background: #DCFCE7;
+    color: #15803D;
+    border: 1px solid #86EFAC;
+}
+
+.vb-input-suffix {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.vb-suffix {
+    font-size: 13.5px;
+    font-weight: 800;
+    color: #2563EB;
+    white-space: nowrap;
+}
+
+.vb-info-box {
+    background: #F0FDF4;
+    border: 1px solid #BBF7D0;
+    border-radius: 6px;
+    padding: 8px 12px;
+    font-size: 13.5px;
+    color: #166534;
+    margin-top: 4px;
+}
+
+.vb-form-footer {
+    background: #F8FAFC;
+    border-top: 1.5px solid #E2E8F0;
+    padding: 10px 18px;
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+}
+
+/* ============================================================
+   FORM FULL PAGE — TAMBAH/EDIT BARANG (2 KOLOM, TANPA SCROLL)
+   ============================================================ */
+.form-fullpage-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.45fr;
+    gap: 18px;
+    align-items: start;
+}
+
+.form-col-left,
+.form-col-right {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+/* ---- SATUAN GROUP CARD ---- */
+.satuan-group {
+    background: #FFFFFF;
+    border: 1.5px solid #E2E8F0;
+    border-radius: 14px;
+    padding: 16px 18px 6px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+}
+
+.satuan-group-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 1.5px solid #F1F5F9;
+}
+
+.satuan-group-icon { font-size: 18px; }
+
+.satuan-group-title {
+    font-size: 15px;
+    font-weight: 800;
+    color: #0F172A;
+    letter-spacing: -0.2px;
+}
+
+/* Color accents per satuan */
+.satuan-dus  { border-color: #BFDBFE; background: linear-gradient(135deg,#fff 0%,#EFF6FF 100%); }
+.satuan-dus  .satuan-group-header { border-bottom-color: #BFDBFE; }
+.satuan-dus  .satuan-group-title  { color: #1D4ED8; }
+
+.satuan-lusin { border-color: #BBF7D0; background: linear-gradient(135deg,#fff 0%,#F0FDF4 100%); }
+.satuan-lusin .satuan-group-header { border-bottom-color: #BBF7D0; }
+.satuan-lusin .satuan-group-title  { color: #15803D; }
+
+.satuan-pcs  { border-color: #DDD6FE; background: linear-gradient(135deg,#fff 0%,#F5F3FF 100%); }
+.satuan-pcs  .satuan-group-header { border-bottom-color: #DDD6FE; }
+.satuan-pcs  .satuan-group-title  { color: #7C3AED; }
+
+/* Form rows inside satuan group — compact */
+.satuan-group .form-row        { margin-bottom: 11px; }
+.satuan-group .form-row label  { font-size: 13.5px; font-weight: 600; color: #475569; margin-bottom: 4px; }
+.satuan-group .form-row input,
+.satuan-group .form-row select { padding: 9px 12px; font-size: 15px; border-radius: 8px; }
+
+/* ---- KONVERSI INFO BOX ---- */
+.konversi-info {
+    background: #F0FDF4;
+    border: 1.5px solid #BBF7D0;
+    border-radius: 10px;
+    padding: 10px 14px;
+    margin-bottom: 12px;
+}
+
+.konversi-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 3px 0;
+}
+
+.konversi-label { font-size: 14px; color: #15803D; font-weight: 600; }
+.konversi-val   { font-size: 15px; font-weight: 800; color: #166534; }
+
+/* ---- ACTION BUTTONS ROW ---- */
+.form-action-row {
+    display: flex;
+    gap: 12px;
+    margin-top: 18px;
+    justify-content: flex-end;
+}
+
+.btn-batal-form {
+    padding: 12px 28px;
+    border: 1.5px solid #E2E8F0;
+    border-radius: 10px;
+    background: #FFFFFF;
+    color: #64748B;
+    font-size: 15px;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.15s ease;
+}
+
+.btn-batal-form:hover {
+    border-color: #94A3B8;
+    color: #0F172A;
+    background: #F8FAFC;
+}
+
+.btn-simpan-form {
+    padding: 12px 36px;
+    background: linear-gradient(135deg, #2563EB, #3B82F6);
+    color: #FFFFFF;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 700;
+    font-family: inherit;
+    cursor: pointer;
+    box-shadow: 0 4px 14px rgba(37,99,235,0.3);
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.btn-simpan-form:hover {
+    background: linear-gradient(135deg, #1D4ED8, #2563EB);
+    box-shadow: 0 6px 20px rgba(37,99,235,0.4);
+    transform: translateY(-1px);
+}
+
+/* Responsive */
+@media (max-width: 1100px) {
+    .form-fullpage-grid { grid-template-columns: 1fr; }
 }

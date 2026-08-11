@@ -21,8 +21,6 @@
     <div class="filter-pills-group">
         <button type="button" class="filter-pill-btn active" onclick="filterStatus(this, '')">Semua</button>
         <button type="button" class="filter-pill-btn" onclick="filterStatus(this, 'Selesai')">Selesai</button>
-        <button type="button" class="filter-pill-btn" onclick="filterStatus(this, 'Void')">Void</button>
-        <button type="button" class="filter-pill-btn" onclick="filterStatus(this, 'Refund')">Refund</button>
     </div>
 </div>
 
