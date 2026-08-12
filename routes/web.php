@@ -29,6 +29,9 @@ Route::middleware(['role:admin,manajer'])->prefix('admin')->group(function () {
     Route::post('/barang/simpan', [AdminController::class, 'simpanBarang']);
 
     Route::get('/kategori', [AdminController::class, 'kategori']);
+    Route::post('/kategori/simpan', [AdminController::class, 'simpanKategori']);
+    Route::post('/kategori/update', [AdminController::class, 'updateKategori']);
+    Route::post('/kategori/hapus', [AdminController::class, 'hapusKategori']);
 
     Route::get('/supplier', [AdminController::class, 'supplier']);
     Route::post('/supplier/simpan', [AdminController::class, 'simpanSupplier']);

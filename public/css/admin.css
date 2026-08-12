@@ -811,7 +811,7 @@
 }
 
 .vb-lbl {
-    font-size: 13.5px;
+    font-size: 15.5px;
     font-weight: 600;
     color: #334155;
     white-space: normal;
@@ -819,10 +819,10 @@
 
 .vb-inp {
     width: 100%;
-    padding: 5px 9px;
+    padding: 7px 11px;
     border: 1.5px solid #CBD5E1;
     border-radius: 6px;
-    font-size: 14px;
+    font-size: 16px;
     font-family: inherit;
     color: #0F172A;
     background: #FFFFFF;
@@ -834,6 +834,153 @@
     border-color: #2563EB !important;
     box-shadow: 0 0 0 2.5px rgba(37, 99, 235, 0.2) !important;
     background: #EFF6FF;
+}
+
+.vb-select-wrapper {
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.vb-select-wrapper .vb-inp {
+    padding-right: 32px;
+}
+
+.vb-select-wrapper::after {
+    content: "▼";
+    font-size: 10px;
+    color: #64748B;
+    position: absolute;
+    right: 12px;
+    pointer-events: none;
+}
+
+/* ============================================================
+   CUSTOM SEARCHABLE SELECT DROPDOWN (FIGMA/DISKOMINFO STYLE)
+   ============================================================ */
+.vb-search-select {
+    position: relative;
+    width: 100%;
+}
+
+.vb-select-btn {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1.5px solid #CBD5E1;
+    border-radius: 6px;
+    font-size: 16px;
+    font-family: inherit;
+    color: #0F172A;
+    background: #FFFFFF;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.15s ease;
+}
+
+.vb-select-btn:focus,
+.vb-search-select.open .vb-select-btn {
+    outline: none;
+    border-color: #2563EB !important;
+    box-shadow: 0 0 0 2.5px rgba(37, 99, 235, 0.2) !important;
+    background: #EFF6FF;
+}
+
+.vb-select-btn .vb-select-text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.vb-select-btn .vb-select-text.placeholder {
+    color: #94A3B8;
+}
+
+.vb-select-btn .vb-select-arrow {
+    font-size: 10px;
+    color: #64748B;
+    transition: transform 0.2s ease;
+    margin-left: 8px;
+}
+
+.vb-search-select.open .vb-select-arrow {
+    transform: rotate(180deg);
+}
+
+.vb-select-dropdown {
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    right: 0;
+    z-index: 999;
+    background: #FFFFFF;
+    border: 1.5px solid #CBD5E1;
+    border-radius: 8px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    padding: 8px;
+}
+
+.vb-select-search-box {
+    margin-bottom: 6px;
+}
+
+.vb-select-search-input {
+    width: 100%;
+    padding: 7px 10px;
+    border: 1.5px solid #94A3B8;
+    border-radius: 6px;
+    font-size: 15px;
+    font-family: inherit;
+    color: #0F172A;
+    background: #F8FAFC;
+    box-sizing: border-box;
+}
+
+.vb-select-search-input:focus {
+    outline: none;
+    border-color: #2563EB;
+    background: #FFFFFF;
+    box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.15);
+}
+
+.vb-select-options {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    max-height: 180px;
+    overflow-y: auto;
+}
+
+.vb-option-item {
+    padding: 8px 12px;
+    font-size: 15px;
+    color: #1E293B;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.1s ease;
+}
+
+.vb-option-item:hover,
+.vb-option-item.highlighted {
+    background: #2563EB;
+    color: #FFFFFF;
+    font-weight: 600;
+}
+
+.vb-option-item.selected {
+    background: #EFF6FF;
+    color: #2563EB;
+    font-weight: 700;
+}
+
+.vb-option-empty {
+    padding: 10px;
+    text-align: center;
+    color: #94A3B8;
+    font-size: 14px;
 }
 
 .vb-inp.readonly {

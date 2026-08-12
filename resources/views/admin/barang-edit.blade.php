@@ -37,24 +37,51 @@
                 </div>
 
                 {{-- 3. Supplier & 4. Jenis Kategori --}}
+                {{-- 3. Supplier & 4. Jenis Kategori --}}
                 <div class="vb-row-two">
                     <div class="vb-subcol">
                         <label class="vb-lbl">3. Supplier <span style="color:red">*</span></label>
-                        <select name="NamaSup" id="f_NamaSup" required class="vb-inp">
-                            <option value="">-- Pilih Supplier --</option>
-                            @foreach ($supplier as $s)
-                                <option value="{{ $s->NamaSup }}" {{ $barang->NamaSup == $s->NamaSup ? 'selected' : '' }}>{{ $s->NamaSup }}</option>
-                            @endforeach
-                        </select>
+                        <div class="vb-search-select" id="wrap_NamaSup">
+                            <input type="hidden" name="NamaSup" id="f_NamaSup" required value="{{ $barang->NamaSup }}">
+                            <button type="button" class="vb-select-btn" id="btn_NamaSup">
+                                <span class="vb-select-text {{ $barang->NamaSup ? '' : 'placeholder' }}">
+                                    {{ $barang->NamaSup ?: '-- Pilih Supplier --' }}
+                                </span>
+                                <span class="vb-select-arrow">▼</span>
+                            </button>
+                            <div class="vb-select-dropdown" style="display:none;">
+                                <div class="vb-select-search-box">
+                                    <input type="text" class="vb-select-search-input" placeholder="🔍 Cari supplier..." autocomplete="off">
+                                </div>
+                                <ul class="vb-select-options">
+                                    @foreach ($supplier as $s)
+                                        <li class="vb-option-item {{ $barang->NamaSup == $s->NamaSup ? 'selected' : '' }}" data-value="{{ $s->NamaSup }}">{{ $s->NamaSup }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        </div>
                     </div>
                     <div class="vb-subcol">
                         <label class="vb-lbl">4. Jenis Kategori <span style="color:red">*</span></label>
-                        <input type="text" name="Jenis" id="f_Jenis" list="daftarKategori" required value="{{ $barang->Jenis }}" class="vb-inp">
-                        <datalist id="daftarKategori">
-                            @foreach ($kategoriList as $k)
-                                <option value="{{ $k }}">
-                            @endforeach
-                        </datalist>
+                        <div class="vb-search-select" id="wrap_Jenis">
+                            <input type="hidden" name="Jenis" id="f_Jenis" required value="{{ $barang->Jenis }}">
+                            <button type="button" class="vb-select-btn" id="btn_Jenis">
+                                <span class="vb-select-text {{ $barang->Jenis ? '' : 'placeholder' }}">
+                                    {{ $barang->Jenis ?: '-- Pilih Kategori --' }}
+                                </span>
+                                <span class="vb-select-arrow">▼</span>
+                            </button>
+                            <div class="vb-select-dropdown" style="display:none;">
+                                <div class="vb-select-search-box">
+                                    <input type="text" class="vb-select-search-input" placeholder="🔍 Cari / Tambah kategori..." autocomplete="off">
+                                </div>
+                                <ul class="vb-select-options">
+                                    @foreach ($kategoriList as $k)
+                                        <li class="vb-option-item {{ $barang->Jenis == $k ? 'selected' : '' }}" data-value="{{ $k }}">{{ $k }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -200,13 +227,154 @@
 </div>
 
 <script>
+// ============================================================
+// SEARCHABLE SELECT DROPDOWN COMPONENT
+// ============================================================
+function initSearchableSelect(wrapperId, placeholderText, nextElementId) {
+    const wrapper = document.getElementById(wrapperId);
+    if (!wrapper) return;
+
+    const btn = wrapper.querySelector('.vb-select-btn');
+    const textSpan = wrapper.querySelector('.vb-select-text');
+    const dropdown = wrapper.querySelector('.vb-select-dropdown');
+    const searchInput = wrapper.querySelector('.vb-select-search-input');
+    const optionsList = wrapper.querySelector('.vb-select-options');
+    const items = optionsList.querySelectorAll('.vb-option-item');
+    const hiddenInput = wrapper.querySelector('input[type="hidden"]');
+
+    function openDropdown() {
+        document.querySelectorAll('.vb-search-select').forEach(w => {
+            if (w !== wrapper) {
+                w.classList.remove('open');
+                const d = w.querySelector('.vb-select-dropdown');
+                if (d) d.style.display = 'none';
+            }
+        });
+
+        wrapper.classList.add('open');
+        dropdown.style.display = 'block';
+        searchInput.value = '';
+        filterOptions('');
+        setTimeout(() => searchInput.focus(), 50);
+    }
+
+    function closeDropdown() {
+        wrapper.classList.remove('open');
+        dropdown.style.display = 'none';
+    }
+
+    function selectValue(val) {
+        hiddenInput.value = val;
+        if (val) {
+            textSpan.textContent = val;
+            textSpan.classList.remove('placeholder');
+        } else {
+            textSpan.textContent = placeholderText;
+            textSpan.classList.add('placeholder');
+        }
+        closeDropdown();
+
+        if (nextElementId) {
+            const nextEl = document.getElementById(nextElementId);
+            if (nextEl) nextEl.focus();
+        }
+    }
+
+    function filterOptions(query) {
+        const q = query.toLowerCase();
+        let visibleCount = 0;
+
+        items.forEach(item => {
+            const val = item.dataset.value.toLowerCase();
+            if (val.includes(q)) {
+                item.style.display = 'block';
+                visibleCount++;
+            } else {
+                item.style.display = 'none';
+            }
+        });
+
+        let emptyMsg = optionsList.querySelector('.vb-option-empty');
+        if (visibleCount === 0) {
+            if (!emptyMsg) {
+                emptyMsg = document.createElement('li');
+                emptyMsg.className = 'vb-option-empty';
+                optionsList.appendChild(emptyMsg);
+            }
+            emptyMsg.textContent = query ? `Gunakan "${query}"` : 'Tidak ada pilihan';
+            emptyMsg.style.display = 'block';
+        } else if (emptyMsg) {
+            emptyMsg.style.display = 'none';
+        }
+    }
+
+    btn.addEventListener('click', function (e) {
+        e.preventDefault();
+        if (wrapper.classList.contains('open')) {
+            closeDropdown();
+        } else {
+            openDropdown();
+        }
+    });
+
+    btn.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ' || e.key === 'ArrowDown') {
+            e.preventDefault();
+            openDropdown();
+        }
+    });
+
+    searchInput.addEventListener('input', function () {
+        filterOptions(this.value);
+    });
+
+    searchInput.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            const visibleItems = Array.from(items).filter(i => i.style.display !== 'none');
+            if (visibleItems.length > 0) {
+                selectValue(visibleItems[0].dataset.value);
+            } else if (this.value.trim() !== '') {
+                selectValue(this.value.trim());
+            }
+        } else if (e.key === 'Escape') {
+            closeDropdown();
+            btn.focus();
+        }
+    });
+
+    items.forEach(item => {
+        item.addEventListener('click', function () {
+            selectValue(this.dataset.value);
+        });
+    });
+
+    if (hiddenInput.value) {
+        textSpan.textContent = hiddenInput.value;
+        textSpan.classList.remove('placeholder');
+    }
+}
+
+document.addEventListener('click', function (e) {
+    if (!e.target.closest('.vb-search-select')) {
+        document.querySelectorAll('.vb-search-select').forEach(w => {
+            w.classList.remove('open');
+            const d = w.querySelector('.vb-select-dropdown');
+            if (d) d.style.display = 'none';
+        });
+    }
+});
+
 document.addEventListener('DOMContentLoaded', function () {
+    initSearchableSelect('wrap_NamaSup', '-- Pilih Supplier --', 'btn_Jenis');
+    initSearchableSelect('wrap_Jenis', '-- Pilih Kategori --', 'f_IsiBsr');
+
     const form = document.getElementById('formEditBarang');
-    const inputs = Array.from(form.querySelectorAll('input:not([readonly]):not([type=hidden]), select'));
+    const inputs = Array.from(form.querySelectorAll('input:not([readonly]):not([type=hidden]), button.vb-select-btn, select'));
     
     inputs.forEach((inp, idx) => {
         inp.addEventListener('keydown', function (e) {
-            if (e.key === 'Enter') {
+            if (e.key === 'Enter' && !inp.classList.contains('vb-select-btn') && inp.tagName !== 'TEXTAREA') {
                 e.preventDefault();
                 if (idx + 1 < inputs.length) {
                     inputs[idx + 1].focus();

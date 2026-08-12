@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Barang;
 use App\Models\Supplier;
 use App\Models\Penjualan;
+use App\Models\MasterKategori;
 
 class AdminController extends Controller
 {
@@ -16,7 +17,7 @@ class AdminController extends Controller
     {
         $barang = Barang::orderByDesc('KodeBrg')->get();
         $supplier = Supplier::all();
-        $kategoriList = Barang::select('Jenis')->distinct()->whereNotNull('Jenis')->pluck('Jenis');
+        $kategoriList = $this->getKategoriList();
 
         return view('admin.barang', compact('barang', 'supplier', 'kategoriList'));
     }
@@ -24,7 +25,7 @@ class AdminController extends Controller
     public function tambahBarang()
     {
         $supplier = Supplier::all();
-        $kategoriList = Barang::select('Jenis')->distinct()->whereNotNull('Jenis')->pluck('Jenis');
+        $kategoriList = $this->getKategoriList();
 
         return view('admin.barang-tambah', compact('supplier', 'kategoriList'));
     }
@@ -87,7 +88,7 @@ class AdminController extends Controller
     {
         $barang = Barang::findOrFail($kode);
         $supplier = Supplier::all();
-        $kategoriList = Barang::select('Jenis')->distinct()->whereNotNull('Jenis')->pluck('Jenis');
+        $kategoriList = $this->getKategoriList();
 
         return view('admin.barang-edit', compact('barang', 'supplier', 'kategoriList'));
     }
@@ -179,19 +180,91 @@ class AdminController extends Controller
     }
 
     // ============ KATEGORI PRODUK ============
-    // Catatan: kategori diambil dari nilai unik kolom Jenis di tabel barang,
-    // BUKAN dari tabel jenisbarang terpisah (struktur kolomnya belum dikonfirmasi).
+
+    private function getKategoriList()
+    {
+        $dariBarang = Barang::whereNotNull('Jenis')->where('Jenis', '!=', '')->pluck('Jenis');
+        $dariMaster = MasterKategori::pluck('NamaKategori');
+        return $dariMaster->merge($dariBarang)->unique()->sort()->values();
+    }
 
     public function kategori()
     {
-        $kategoriList = Barang::select('Jenis', DB::raw('COUNT(*) as total_produk'))
+        // Ambil dari barang (dengan jumlah produk)
+        $dariBarang = Barang::select('Jenis', DB::raw('COUNT(*) as total_produk'))
             ->whereNotNull('Jenis')
             ->where('Jenis', '!=', '')
             ->groupBy('Jenis')
-            ->orderBy('Jenis')
-            ->get();
+            ->pluck('total_produk', 'Jenis')
+            ->toArray();
+
+        // Ambil dari master_kategori
+        $dariMaster = MasterKategori::orderBy('NamaKategori')->pluck('NamaKategori');
+
+        // Gabungkan: master + barang, hilangkan duplikat
+        $semuaNama = $dariMaster->merge(array_keys($dariBarang))->unique()->sort()->values();
+
+        $kategoriList = $semuaNama->map(function ($nama) use ($dariBarang) {
+            return (object)[
+                'Jenis'        => $nama,
+                'total_produk' => $dariBarang[$nama] ?? 0,
+                'dari_master'  => !isset($dariBarang[$nama]),
+            ];
+        });
 
         return view('admin.kategori', compact('kategoriList'));
+    }
+
+    public function simpanKategori(Request $request)
+    {
+        $nama = trim($request->NamaKategori);
+
+        if (!$nama) {
+            return back()->with('error', 'Nama kategori tidak boleh kosong!');
+        }
+
+        // Cek sudah ada di barang atau master
+        $adaDiBarang = Barang::where('Jenis', $nama)->exists();
+        $adaDiMaster = MasterKategori::where('NamaKategori', $nama)->exists();
+
+        if ($adaDiBarang || $adaDiMaster) {
+            return back()->with('error', 'Kategori "' . $nama . '" sudah ada!');
+        }
+
+        MasterKategori::create(['NamaKategori' => $nama]);
+
+        return redirect('/admin/kategori')->with('sukses', 'Kategori "' . $nama . '" berhasil ditambahkan.');
+    }
+
+    public function updateKategori(Request $request)
+    {
+        $lama = $request->jenis_lama;
+        $baru = trim($request->jenis_baru);
+
+        if (!$baru) {
+            return back()->with('error', 'Nama kategori baru tidak boleh kosong!');
+        }
+
+        // Update di tabel barang
+        Barang::where('Jenis', $lama)->update(['Jenis' => $baru]);
+
+        // Update/rename di master_kategori jika ada
+        MasterKategori::where('NamaKategori', $lama)->update(['NamaKategori' => $baru]);
+
+        return redirect('/admin/kategori')->with('sukses', 'Kategori "' . $lama . '" berhasil diubah menjadi "' . $baru . '".');
+    }
+
+    public function hapusKategori(Request $request)
+    {
+        $jenis = $request->jenis;
+
+        // Hapus dari barang (kosongkan Jenis)
+        Barang::where('Jenis', $jenis)->update(['Jenis' => null]);
+
+        // Hapus dari master_kategori jika ada
+        MasterKategori::where('NamaKategori', $jenis)->delete();
+
+        return redirect('/admin/kategori')->with('sukses', 'Kategori "' . $jenis . '" berhasil dihapus.');
     }
 
     // ============ DATA SUPPLIER ============
