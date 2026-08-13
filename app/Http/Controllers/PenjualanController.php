@@ -21,7 +21,12 @@ class PenjualanController extends Controller
         }
 
         $barang = Barang::all();
-        return view('kasir.penjualan', compact('barang'));
+
+        $dariBarang = Barang::whereNotNull('Jenis')->where('Jenis', '!=', '')->pluck('Jenis');
+        $dariMaster = \App\Models\MasterKategori::pluck('NamaKategori');
+        $kategoriList = $dariMaster->merge($dariBarang)->unique()->sort()->values();
+
+        return view('kasir.penjualan', compact('barang', 'kategoriList'));
     }
 
     public function simpan(Request $request)

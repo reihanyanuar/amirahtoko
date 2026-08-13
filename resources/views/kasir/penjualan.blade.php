@@ -17,9 +17,6 @@
         {{-- Category Filter --}}
         <div class="category-filter" id="categoryFilter">
             <button class="category-chip active" onclick="filterKategori(this, '')">Semua</button>
-            @php
-                $kategoriList = $barang->pluck('Jenis')->unique()->filter()->sort()->values();
-            @endphp
             @foreach ($kategoriList as $kat)
                 <button class="category-chip" onclick="filterKategori(this, '{{ $kat }}')">{{ $kat }}</button>
             @endforeach

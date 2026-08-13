@@ -14,10 +14,19 @@
     </a>
 </div>
 
-{{-- SEARCH BAR --}}
-<div class="admin-search-wrap">
-    <span class="search-icon">🔍</span>
-    <input type="text" id="cariBarangAdmin" placeholder="Cari nama atau barcode..." oninput="filterBarangTable()">
+{{-- SEARCH BAR & FILTER STOK --}}
+<div style="display: flex; gap: 16px; align-items: center; justify-content: space-between; margin-bottom: 16px; flex-wrap: wrap;">
+    <div class="admin-search-wrap" style="flex: 1; min-width: 260px; margin-bottom: 0;">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="cariBarangAdmin" placeholder="Cari nama atau barcode..." oninput="filterBarangTable()">
+    </div>
+
+    {{-- FILTER STOK CHIPS --}}
+    <div style="display: flex; gap: 8px;">
+        <button type="button" class="filter-pill-btn active" onclick="filterStokAdmin(this, 'semua')">Semua Stok</button>
+        <button type="button" class="filter-pill-btn" onclick="filterStokAdmin(this, 'menipis')">⚠️ Stok Menipis (≤ 10)</button>
+        <button type="button" class="filter-pill-btn" onclick="filterStokAdmin(this, 'aman')">✓ Stok Aman (> 10)</button>
+    </div>
 </div>
 
 {{-- DATA TABLE --}}
@@ -45,8 +54,12 @@
                     elseif (str_contains($katLower, 'sembako') || str_contains($katLower, 'beras') || str_contains($katLower, 'gula')) $badgeClass = 'badge-kat-sembako';
                     elseif (str_contains($katLower, 'care') || str_contains($katLower, 'sabun')) $badgeClass = 'badge-kat-personal-care';
                     elseif (str_contains($katLower, 'rokok')) $badgeClass = 'badge-kat-rokok';
+
+                    $statusStok = $b->JmlStock <= 10 ? 'menipis' : 'aman';
                 @endphp
-                <tr class="barang-row" data-search="{{ strtolower($b->KodeBrg . ' ' . $b->NamaBrg . ' ' . $b->Jenis) }}">
+                <tr class="barang-row"
+                    data-search="{{ strtolower($b->KodeBrg . ' ' . $b->NamaBrg . ' ' . $b->Jenis) }}"
+                    data-status="{{ $statusStok }}">
                     <td style="font-family: monospace; font-size: 14px; color: #64748B;">{{ $b->KodeBrg }}</td>
                     <td style="font-weight: 700; color: #0F172A;">{{ $b->NamaBrg }}</td>
                     <td>
@@ -55,7 +68,7 @@
                     <td style="font-weight: 700;">Rp {{ number_format($b->Harga1, 0, ',', '.') }}</td>
                     <td style="color: #64748B;">Rp {{ number_format($b->Hpp, 0, ',', '.') }}</td>
                     <td>
-                        <strong style="color: {{ $b->JmlStock <= 5 ? '#DC2626' : '#16A34A' }};">
+                        <strong style="color: {{ $b->JmlStock <= 10 ? '#DC2626' : '#16A34A' }};">
                             {{ $b->JmlStock }}
                         </strong> 
                         <span style="color: #64748B; font-size: 14px;">{{ $b->SatKcl }}</span>
@@ -74,11 +87,33 @@
 </div>
 
 <script>
+let currentStokFilter = 'semua';
+
+function filterStokAdmin(btn, status) {
+    currentStokFilter = status;
+    
+    // Switch active class on filter pill buttons
+    document.querySelectorAll('.filter-pill-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+
+    tampilkanDataFiltered();
+}
+
 function filterBarangTable() {
+    tampilkanDataFiltered();
+}
+
+function tampilkanDataFiltered() {
     const q = document.getElementById('cariBarangAdmin').value.toLowerCase();
+    
     document.querySelectorAll('.barang-row').forEach(row => {
-        const text = row.dataset.search;
-        row.style.display = text.includes(q) ? '' : 'none';
+        const text = row.dataset.search || '';
+        const status = row.dataset.status || '';
+
+        const cocokSearch = text.includes(q);
+        const cocokStok   = (currentStokFilter === 'semua') || (status === currentStokFilter);
+
+        row.style.display = (cocokSearch && cocokStok) ? '' : 'none';
     });
 }
 </script>
