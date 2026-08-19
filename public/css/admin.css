@@ -1179,7 +1179,67 @@
     transform: translateY(-1px);
 }
 
-/* Responsive */
-@media (max-width: 1100px) {
-    .form-fullpage-grid { grid-template-columns: 1fr; }
+/* ============================================================
+   RESPONSIVE FORM & ADMIN PAGES (LAYAR < 1024px & < 768px)
+   ============================================================ */
+@media (max-width: 1024px) {
+    .vb-form-grid-2col,
+    .form-fullpage-grid {
+        grid-template-columns: 1fr !important;
+        gap: 14px;
+    }
+
+    div[style*="grid-template-columns: 420px 1fr"],
+    div[style*="grid-template-columns: 1fr 1.4fr"] {
+        grid-template-columns: 1fr !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .page-head-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .page-head-row a,
+    .page-head-row button {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .vb-row-two {
+        grid-template-columns: 1fr !important;
+        gap: 10px;
+    }
+
+    .vb-form-card {
+        padding: 14px !important;
+    }
+
+    .vb-form-footer {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .vb-form-footer button,
+    .vb-form-footer a {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .admin-search-wrap {
+        width: 100% !important;
+    }
+
+    .form-action-row {
+        flex-direction: column-reverse;
+        gap: 8px;
+    }
+
+    .form-action-row a,
+    .form-action-row button {
+        width: 100%;
+        justify-content: center;
+    }
 }

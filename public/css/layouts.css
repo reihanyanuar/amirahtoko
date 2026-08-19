@@ -311,3 +311,77 @@ body {
 .badge-purple { background: #F3E8FF; color: #7E22CE; }
 .badge-gray   { background: #F1F5F9; color: #475569; }
 .badge-orange { background: #FEF3C7; color: #92400E; }
+
+/* ============================================================
+   RESPONSIVE MOBILE BREAKPOINTS (LAYAR < 768px)
+   ============================================================ */
+@media (max-width: 768px) {
+    .app-layout {
+        flex-direction: column;
+        height: auto;
+        min-height: 100vh;
+    }
+
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: static;
+    }
+
+    .sidebar-brand {
+        padding: 14px 16px;
+    }
+
+    .sidebar-user-box {
+        display: none;
+    }
+
+    .sidebar-nav {
+        display: flex;
+        flex-direction: row;
+        overflow-x: auto;
+        padding: 8px 12px;
+        gap: 6px;
+        -webkit-overflow-scrolling: touch;
+        white-space: nowrap;
+    }
+
+    .nav-item {
+        white-space: nowrap;
+        padding: 8px 12px;
+        font-size: 14px;
+        border-radius: 8px;
+    }
+
+    .nav-label {
+        display: none;
+    }
+
+    .sidebar-logout {
+        display: none;
+    }
+
+    .topbar {
+        padding: 0 16px;
+        height: 54px;
+    }
+
+    .topbar h1 {
+        font-size: 18px;
+    }
+
+    .topbar-right {
+        font-size: 13px;
+    }
+
+    .main-content {
+        padding: 14px;
+    }
+
+    .table-container,
+    .table-wrapper {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        border-radius: 8px;
+    }
+}

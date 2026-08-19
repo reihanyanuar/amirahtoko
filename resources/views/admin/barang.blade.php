@@ -1,12 +1,12 @@
 @extends('layouts.admin')
-@section('title', 'Data Barang')
+@section('title', 'Stok Barang')
 
 @section('content')
 
 {{-- PAGE HEADER --}}
 <div class="page-head-row">
     <div>
-        <h2 class="page-head-title">Data Barang</h2>
+        <h2 class="page-head-title">📦 Stok Barang</h2>
         <p class="page-head-sub">{{ $barang->count() }} produk terdaftar</p>
     </div>
     <a href="{{ url('/admin/barang/tambah') }}" class="btn-add-green">

@@ -1,15 +1,15 @@
 @extends('layouts.admin')
-@section('title', 'Tambah Produk Baru')
+@section('title', 'Input Barang')
 
 @section('content')
 
 {{-- PAGE HEADER --}}
 <div class="page-head-row" style="margin-bottom:12px;">
     <div>
-        <h2 class="page-head-title">Tambah Produk Baru</h2>
+        <h2 class="page-head-title">📝 Input Barang</h2>
         <p class="page-head-sub">Isi data produk sesuai urutan · Tekan Enter untuk pindah ke field berikutnya</p>
     </div>
-    <a href="{{ url('/admin/barang') }}" class="btn-add-blue">← Kembali ke Daftar</a>
+    <a href="{{ url('/admin/barang') }}" class="btn-add-blue">📦 Lihat Stok Barang</a>
 </div>
 
 {{-- COMPACT FORM CONTAINER --}}

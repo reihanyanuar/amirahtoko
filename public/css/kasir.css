@@ -986,3 +986,50 @@
     background: #ECFDF3;
     border-color: #4ADE80;
 }
+
+/* ============================================================
+   RESPONSIVE POS KASIR (LAYAR HP < 900px & < 600px)
+   ============================================================ */
+@media (max-width: 900px) {
+    .pos-layout {
+        flex-direction: column;
+        height: auto;
+        min-height: calc(100vh - 54px);
+    }
+
+    .products-col {
+        width: 100%;
+        height: auto;
+        padding-right: 0;
+    }
+
+    .cart-col {
+        width: 100%;
+        height: auto;
+        position: static;
+        box-shadow: none;
+        border-top: 2px solid #E2E8F0;
+        border-left: none;
+        margin-top: 20px;
+        padding-top: 16px;
+    }
+
+    .product-grid {
+        grid-template-columns: repeat(auto-fill, minmax(135px, 1fr));
+        gap: 10px;
+    }
+
+    .product-card {
+        padding: 10px;
+    }
+
+    .modal-box {
+        width: 92% !important;
+        max-width: 420px;
+        padding: 20px !important;
+    }
+
+    .quick-money-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+}

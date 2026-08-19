@@ -20,9 +20,18 @@ class AuthController extends Controller
         ]);
 
         if (Auth::attempt($credentials)) {
-            $request->session()->regenerate();
-
             $user = Auth::user();
+
+            if (!$user->is_active) {
+                Auth::logout();
+                $request->session()->invalidate();
+                $request->session()->regenerateToken();
+                return back()->withErrors([
+                    'username' => 'Akun Anda dinonaktifkan oleh Manajer. Hubungi manajer untuk mengaktifkan kembali.',
+                ])->onlyInput('username');
+            }
+
+            $request->session()->regenerate();
 
             return match ($user->role) {
                 'admin' => redirect('/admin/barang'),

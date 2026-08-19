@@ -14,4 +14,9 @@ class Shift extends Model
         'mulai' => 'datetime',
         'selesai' => 'datetime',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }

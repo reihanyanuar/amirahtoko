@@ -8,6 +8,7 @@ use App\Models\Barang;
 use App\Models\Supplier;
 use App\Models\Penjualan;
 use App\Models\MasterKategori;
+use App\Models\TambahStok;
 
 class AdminController extends Controller
 {
@@ -309,5 +310,75 @@ class AdminController extends Controller
             ->get();
 
         return view('admin.riwayat', compact('riwayat'));
+    }
+
+    // ============ TAMBAH STOK (RESTOCK CEPAT) ============
+
+    public function tambahStok()
+    {
+        $barangList = Barang::orderBy('NamaBrg')->get();
+        $riwayat = TambahStok::orderByDesc('Tanggal')->orderByDesc('Jam')->take(30)->get();
+
+        return view('admin.tambah-stok', compact('barangList', 'riwayat'));
+    }
+
+    public function simpanTambahStok(Request $request)
+    {
+        $request->validate([
+            'KodeBrg' => 'required',
+            'Qty'     => 'required|numeric|min:1',
+            'Sat'     => 'required',
+        ], [
+            'KodeBrg.required' => 'Silakan pilih barang terlebih dahulu!',
+            'Qty.required'     => 'Jumlah stok wajib diisi!',
+            'Qty.min'          => 'Jumlah stok minimal 1!',
+            'Sat.required'     => 'Satuan wajib dipilih!',
+        ]);
+
+        $barang = Barang::findOrFail($request->KodeBrg);
+        $stokAwal = (int) $barang->JmlStock;
+
+        $qtyInput = (int) $request->Qty;
+        $satuan   = $request->Sat;
+        $jmlPcs   = $qtyInput;
+
+        // Cek apakah satuan Dus atau Lusin untuk dikalikan
+        $namaSatBsr = $barang->SatBsr ?: 'Dus';
+        $namaSatSdg = $barang->SatSdg ?: 'Lusin';
+
+        if ($satuan === $namaSatBsr && $barang->IsiBsr > 1) {
+            $jmlPcs = $qtyInput * (int) $barang->IsiBsr;
+        } elseif ($satuan === $namaSatSdg && $barang->IsiSdg > 1) {
+            $jmlPcs = $qtyInput * (int) $barang->IsiSdg;
+        }
+
+        $stokAkhir = $stokAwal + $jmlPcs;
+
+        // Simpan ke tabel tambahstok
+        $noNota = 'TS' . date('YmdHis');
+        TambahStok::create([
+            'Urut'     => 1,
+            'NoNota'   => $noNota,
+            'Tanggal'  => date('Y-m-d'),
+            'Jam'      => date('H:i:s'),
+            'Operator' => auth()->user()->name ?? 'Admin',
+            'IdKode'   => $barang->KodeBrg,
+            'Ket'      => 'Tambah Stok',
+            'KodeBrg'  => $barang->KodeBrg,
+            'KodeSdg'  => $barang->KodeSdg ?: $barang->KodeBrg,
+            'KodeBsr'  => $barang->KodeBsr ?: $barang->KodeBsr,
+            'NamaBrg'  => $barang->NamaBrg,
+            'Qty'      => $qtyInput,
+            'Sat'      => $satuan,
+            'JmlBrg'   => $jmlPcs,
+            'Catatan'  => $request->Catatan ?: '-',
+            'Awal'     => $stokAwal,
+            'Akhir'    => $stokAkhir,
+        ]);
+
+        // Increment stok barang
+        $barang->increment('JmlStock', $jmlPcs);
+
+        return redirect('/admin/tambah-stok')->with('sukses', "Stok \"{$barang->NamaBrg}\" berhasil ditambah {$jmlPcs} Pcs (+{$qtyInput} {$satuan}). Stok sekarang: {$stokAkhir} Pcs.");
     }
 }

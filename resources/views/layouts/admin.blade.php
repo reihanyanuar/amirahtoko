@@ -30,8 +30,14 @@
 
             <nav class="sidebar-nav">
                 <div class="nav-label">Menu Admin</div>
-                <a href="{{ url('/admin/barang') }}" class="nav-item {{ request()->is('admin/barang*') ? 'active' : '' }}">
-                    <span class="nav-icon">📦</span> Input Barang
+                <a href="{{ url('/admin/barang/tambah') }}" class="nav-item {{ request()->is('admin/barang/tambah') || request()->is('admin/barang/edit*') ? 'active' : '' }}">
+                    <span class="nav-icon">📝</span> Input Barang
+                </a>
+                <a href="{{ url('/admin/barang') }}" class="nav-item {{ request()->routeIs('*') && request()->is('admin/barang') ? 'active' : '' }}">
+                    <span class="nav-icon">📦</span> Stok Barang
+                </a>
+                <a href="{{ url('/admin/tambah-stok') }}" class="nav-item {{ request()->is('admin/tambah-stok*') ? 'active' : '' }}">
+                    <span class="nav-icon">➕</span> Tambah Stok
                 </a>
                 <a href="{{ url('/admin/kategori') }}" class="nav-item {{ request()->is('admin/kategori*') ? 'active' : '' }}">
                     <span class="nav-icon">🏷️</span> Kategori Produk
