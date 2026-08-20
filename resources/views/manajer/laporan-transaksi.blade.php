@@ -127,8 +127,10 @@
 </div>
 
 {{-- PAGINATION --}}
-<div style="margin-top: 16px;">
-    {{ $transaksi->links() }}
-</div>
+@if ($transaksi->hasPages())
+    <div class="manajer-pagination-container">
+        {{ $transaksi->appends(request()->query())->links('pagination::bootstrap-4') }}
+    </div>
+@endif
 
 @endsection

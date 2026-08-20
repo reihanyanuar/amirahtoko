@@ -44,6 +44,10 @@
                     <span class="nav-icon">👥</span> Kelola Akun
                 </a>
 
+                <a href="{{ url('/manajer/pelanggan') }}" class="nav-item {{ request()->is('manajer/pelanggan*') || request()->is('admin/pelanggan*') ? 'active' : '' }}">
+                    <span class="nav-icon">👤</span> Data Pelanggan
+                </a>
+
                 <a href="{{ url('/manajer/shift') }}" class="nav-item {{ request()->is('manajer/shift*') ? 'active' : '' }}">
                     <span class="nav-icon">⏰</span> Laporan Shift
                 </a>

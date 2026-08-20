@@ -189,6 +189,123 @@
     overflow: hidden;
 }
 
+/* Widget Pelanggan di Keranjang */
+.customer-picker-box {
+    padding: 12px 14px;
+    background: #F8FAFC;
+    border-bottom: 1px solid #E2E8F0;
+}
+
+.customer-picker-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.customer-badge {
+    background: #DBEAFE;
+    color: #1D4ED8;
+    font-weight: 700;
+    font-size: 12px;
+    padding: 3px 8px;
+    border-radius: 6px;
+    border: 1px solid #BFDBFE;
+    max-width: 180px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.customer-search-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.customer-search-wrap input {
+    width: 100%;
+    padding: 6px 28px 6px 10px;
+    font-size: 13px;
+    border: 1.5px solid #CBD5E1;
+    border-radius: 6px;
+    outline: none;
+    background: #FFFFFF;
+    transition: all 0.15s ease;
+}
+
+.customer-search-wrap input:focus {
+    border-color: #2563EB;
+    box-shadow: 0 0 0 2px rgba(37,99,235,0.15);
+}
+
+.customer-search-wrap button {
+    position: absolute;
+    right: 6px;
+    background: transparent;
+    border: none;
+    color: #94A3B8;
+    cursor: pointer;
+    font-size: 12px;
+    padding: 2px 4px;
+}
+
+.customer-search-wrap button:hover {
+    color: #DC2626;
+}
+
+.customer-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: #FFFFFF;
+    border: 1px solid #CBD5E1;
+    border-radius: 6px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.1);
+    z-index: 100;
+    max-height: 180px;
+    overflow-y: auto;
+    margin-top: 4px;
+}
+
+.customer-option {
+    padding: 8px 12px;
+    font-size: 13px;
+    cursor: pointer;
+    border-bottom: 1px solid #F1F5F9;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.customer-option:hover {
+    background: #EFF6FF;
+}
+
+.customer-option .cust-code {
+    font-weight: 700;
+    color: #1D4ED8;
+}
+
+.customer-option .cust-name {
+    color: #334155;
+}
+
+.ci-discount-input {
+    width: 70px;
+    padding: 3px 5px;
+    font-size: 12px;
+    border: 1px solid #CBD5E1;
+    border-radius: 4px;
+    text-align: right;
+    outline: none;
+}
+
+.ci-discount-input:focus {
+    border-color: #2563EB;
+}
+
 .cart-head {
     padding: 16px 18px;
     border-bottom: 1px solid #F1F5F9;

@@ -9,6 +9,7 @@ use App\Models\Supplier;
 use App\Models\Penjualan;
 use App\Models\MasterKategori;
 use App\Models\TambahStok;
+use App\Models\Pelanggan;
 
 class AdminController extends Controller
 {
@@ -31,11 +32,40 @@ class AdminController extends Controller
         return view('admin.barang-tambah', compact('supplier', 'kategoriList'));
     }
 
+    public function checkKodeBarang($kode)
+    {
+        $barang = Barang::where('KodeBrg', $kode)
+            ->orWhere('KodeBsr', $kode)
+            ->orWhere('KodeSdg', $kode)
+            ->first();
+
+        if ($barang) {
+            return response()->json([
+                'exists'       => true,
+                'kode'         => $barang->KodeBrg,
+                'nama'         => $barang->NamaBrg,
+                'redirect_url' => url('/admin/barang/edit/' . $barang->KodeBrg)
+            ]);
+        }
+
+        return response()->json(['exists' => false]);
+    }
+
     public function simpanBarang(Request $request)
     {
+        // Cek jika Kode Barang/Barcode sudah terdaftar -> Otomatis alihkan ke Edit Mode
+        $existing = Barang::where('KodeBrg', $request->KodeBrg)
+            ->orWhere('KodeBsr', $request->KodeBrg)
+            ->orWhere('KodeSdg', $request->KodeBrg)
+            ->first();
+
+        if ($existing) {
+            return redirect('/admin/barang/edit/' . $existing->KodeBrg)
+                ->with('info', 'Barang "' . $existing->NamaBrg . '" dengan barcode [' . $request->KodeBrg . '] sudah terdaftar! Dialihkan ke Form Edit.');
+        }
+
         $messages = [
             'KodeBrg.required' => 'Kode Barang wajib diisi!',
-            'KodeBrg.unique'   => 'Kode Barang sudah terdaftar, gunakan kode lain!',
             'NamaBrg.required' => 'Nama Barang wajib diisi!',
             'NamaSup.required' => 'Supplier wajib dipilih!',
             'Jenis.required'   => 'Jenis Kategori wajib diisi!',
@@ -380,5 +410,74 @@ class AdminController extends Controller
         $barang->increment('JmlStock', $jmlPcs);
 
         return redirect('/admin/tambah-stok')->with('sukses', "Stok \"{$barang->NamaBrg}\" berhasil ditambah {$jmlPcs} Pcs (+{$qtyInput} {$satuan}). Stok sekarang: {$stokAkhir} Pcs.");
+    }
+
+    // ============ KELOLA DATA PELANGGAN ============
+
+    public function pelanggan()
+    {
+        $pelanggan = Pelanggan::orderBy('KodePlg')->get();
+        return view('admin.pelanggan', compact('pelanggan'));
+    }
+
+    public function simpanPelanggan(Request $request)
+    {
+        $request->validate([
+            'KodePlg' => 'required|unique:pelanggan,KodePlg',
+            'NamaPlg' => 'required',
+        ], [
+            'KodePlg.required' => 'Kode Pelanggan wajib diisi!',
+            'KodePlg.unique'   => 'Kode Pelanggan sudah terdaftar!',
+            'NamaPlg.required' => 'Nama Pelanggan wajib diisi!',
+        ]);
+
+        Pelanggan::create([
+            'KodePlg'     => strtoupper(trim($request->KodePlg)),
+            'NamaPlg'     => $request->NamaPlg,
+            'Alamat'      => $request->Alamat ?: '-',
+            'TingkatHrg'  => $request->TingkatHrg ?: 1,
+            'NamaSales'   => $request->NamaSales ?: '-',
+            'Jadwal'      => $request->Jadwal ?: '-',
+            'SaldoKredit' => $request->SaldoKredit ?: 0,
+            'Poin'        => $request->Poin ?: 0,
+        ]);
+
+        return redirect('/admin/pelanggan')->with('sukses', 'Data pelanggan "' . $request->NamaPlg . '" berhasil ditambahkan!');
+    }
+
+    public function updatePelanggan(Request $request, $kode)
+    {
+        $pelanggan = Pelanggan::where('KodePlg', $kode)->firstOrFail();
+
+        $request->validate([
+            'NamaPlg' => 'required',
+        ], [
+            'NamaPlg.required' => 'Nama Pelanggan wajib diisi!',
+        ]);
+
+        $pelanggan->update([
+            'NamaPlg'     => $request->NamaPlg,
+            'Alamat'      => $request->Alamat ?: '-',
+            'TingkatHrg'  => $request->TingkatHrg ?: 1,
+            'NamaSales'   => $request->NamaSales ?: '-',
+            'Jadwal'      => $request->Jadwal ?: '-',
+            'SaldoKredit' => $request->SaldoKredit ?: 0,
+            'Poin'        => $request->Poin ?: 0,
+        ]);
+
+        return redirect('/admin/pelanggan')->with('sukses', 'Data pelanggan "' . $request->NamaPlg . '" berhasil diperbarui!');
+    }
+
+    public function hapusPelanggan($kode)
+    {
+        if ($kode === 'P0001') {
+            return redirect('/admin/pelanggan')->with('error', 'Pelanggan Utama "Customer umum" (P0001) tidak boleh dihapus!');
+        }
+
+        $pelanggan = Pelanggan::where('KodePlg', $kode)->firstOrFail();
+        $nama = $pelanggan->NamaPlg;
+        $pelanggan->delete();
+
+        return redirect('/admin/pelanggan')->with('sukses', 'Pelanggan "' . $nama . '" berhasil dihapus!');
     }
 }

@@ -40,7 +40,14 @@
                     data-isi-sdg="{{ $item->IsiSdg }}"
                     data-harga-bsr="{{ $item->HrgBsr }}"
                     data-sat-bsr="{{ $item->SatBsr }}"
-                    data-isi-bsr="{{ $item->IsiBsr }}">
+                    data-isi-bsr="{{ $item->IsiBsr }}"
+                    data-harga2="{{ $item->Harga2 ?: $item->Harga1 }}"
+                    data-limit2="{{ $item->Limit2 ?: 0 }}"
+                    data-harga3="{{ $item->Harga3 ?: $item->Harga1 }}"
+                    data-limit3="{{ $item->Limit3 ?: 0 }}"
+                    data-hpp="{{ $item->Hpp ?: 0 }}"
+                    data-hpp-bsr="{{ $item->HppBsr ?: 0 }}"
+                    data-hpp-sdg="{{ $item->HppSdg ?: 0 }}">
 
                     <div class="product-name">{{ $item->NamaBrg }}</div>
                     <div class="product-price">Rp {{ number_format($item->Harga1, 0, ',', '.') }} / {{ $item->SatKcl }}</div>
@@ -64,6 +71,19 @@
 
     {{-- ======================== KERANJANG ======================== --}}
     <div class="cart-col">
+        {{-- Widget Pelanggan --}}
+        <div class="customer-picker-box">
+            <div class="customer-picker-header">
+                <span style="font-weight:700; color:#0F172A; font-size:14px;">👤 Pelanggan</span>
+                <span class="customer-badge" id="customerBadge">P0001 - Customer umum</span>
+            </div>
+            <div class="customer-search-wrap">
+                <input type="text" id="cariPelangganInput" placeholder="Cari Kode / Nama Pelanggan..." autocomplete="off">
+                <button type="button" id="btnResetPelanggan" onclick="resetPelanggan()" title="Reset ke Pelanggan Umum" style="display:none;">✕</button>
+                <div class="customer-dropdown" id="customerDropdown" style="display:none;"></div>
+            </div>
+        </div>
+
         <div class="cart-head">
             <span class="cart-title">🛒 Keranjang</span>
             <span class="cart-count" id="cartCount">0 item</span>

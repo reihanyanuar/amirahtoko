@@ -45,6 +45,9 @@
                 <a href="{{ url('/admin/supplier') }}" class="nav-item {{ request()->is('admin/supplier*') ? 'active' : '' }}">
                     <span class="nav-icon">🏬</span> Data Supplier
                 </a>
+                <a href="{{ url('/admin/pelanggan') }}" class="nav-item {{ request()->is('admin/pelanggan*') ? 'active' : '' }}">
+                    <span class="nav-icon">👤</span> Data Pelanggan
+                </a>
                 <a href="{{ url('/admin/riwayat') }}" class="nav-item {{ request()->is('admin/riwayat*') ? 'active' : '' }}">
                     <span class="nav-icon">📜</span> Riwayat Transaksi
                 </a>

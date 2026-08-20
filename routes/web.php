@@ -17,6 +17,7 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::middleware(['role:kasir,admin,manajer'])->prefix('kasir')->group(function () {
     Route::get('/penjualan', [PenjualanController::class, 'index']);
     Route::post('/penjualan/simpan', [PenjualanController::class, 'simpan']);
+    Route::get('/pelanggan/search', [PenjualanController::class, 'cariPelanggan']);
     Route::get('/stok', [PenjualanController::class, 'stok']);
     Route::get('/riwayat', [PenjualanController::class, 'riwayat']);
 });
@@ -31,6 +32,7 @@ Route::middleware(['role:kasir'])->prefix('kasir')->group(function () {
 Route::middleware(['role:admin,manajer'])->prefix('admin')->group(function () {
     Route::get('/barang', [AdminController::class, 'barang']);
     Route::get('/barang/tambah', [AdminController::class, 'tambahBarang']);
+    Route::get('/barang/check/{kode}', [AdminController::class, 'checkKodeBarang']);
     Route::post('/barang/simpan', [AdminController::class, 'simpanBarang']);
 
     Route::get('/kategori', [AdminController::class, 'kategori']);
@@ -40,6 +42,11 @@ Route::middleware(['role:admin,manajer'])->prefix('admin')->group(function () {
 
     Route::get('/supplier', [AdminController::class, 'supplier']);
     Route::post('/supplier/simpan', [AdminController::class, 'simpanSupplier']);
+
+    Route::get('/pelanggan', [AdminController::class, 'pelanggan']);
+    Route::post('/pelanggan/simpan', [AdminController::class, 'simpanPelanggan']);
+    Route::post('/pelanggan/update/{kode}', [AdminController::class, 'updatePelanggan']);
+    Route::post('/pelanggan/hapus/{kode}', [AdminController::class, 'hapusPelanggan']);
 
     Route::get('/riwayat', [AdminController::class, 'riwayat']);
 
@@ -65,6 +72,9 @@ Route::middleware(['role:manajer'])->prefix('manajer')->group(function () {
     Route::post('/akun/update/{id}', [ManajerController::class, 'updateAkun']);
     Route::post('/akun/reset-password/{id}', [ManajerController::class, 'resetPassword']);
     Route::post('/akun/toggle-status/{id}', [ManajerController::class, 'toggleStatus']);
+
+    // 2b. Data Pelanggan (Akses langsung Manajer)
+    Route::get('/pelanggan', [AdminController::class, 'pelanggan']);
 
     // 3. Laporan Shift
     Route::get('/shift', [ManajerController::class, 'laporanShift']);

@@ -123,8 +123,10 @@
 </div>
 
 {{-- PAGINATION --}}
-<div style="margin-top: 16px;">
-    {{ $shifts->links() }}
-</div>
+@if ($shifts->hasPages())
+    <div class="manajer-pagination-container">
+        {{ $shifts->appends(request()->query())->links('pagination::bootstrap-4') }}
+    </div>
+@endif
 
 @endsection

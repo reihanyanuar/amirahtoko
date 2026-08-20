@@ -385,3 +385,16 @@ body {
         border-radius: 8px;
     }
 }
+
+/* Global SVG Fix for Tailwind default pagination icons */
+nav[role="navigation"] svg,
+.pagination svg,
+svg.w-5,
+svg.h-5 {
+    width: 16px !important;
+    height: 16px !important;
+    max-width: 20px !important;
+    max-height: 20px !important;
+    display: inline-block !important;
+    vertical-align: middle;
+}

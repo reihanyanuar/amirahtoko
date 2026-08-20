@@ -329,3 +329,66 @@
         align-items: stretch;
     }
 }
+
+/* ============================================================
+   PAGINATION STYLING & SVG ICON FIX
+   ============================================================ */
+.manajer-pagination-container {
+    margin-top: 16px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.manajer-pagination-container nav {
+    display: flex;
+    align-items: center;
+}
+
+.manajer-pagination-container .pagination {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    gap: 4px;
+}
+
+.manajer-pagination-container .page-item .page-link {
+    padding: 6px 12px;
+    border: 1px solid #E2E8F0;
+    border-radius: 6px;
+    background: #FFFFFF;
+    color: #475569;
+    font-size: 13.5px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.15s ease;
+}
+
+.manajer-pagination-container .page-item.active .page-link {
+    background: #7C3AED;
+    border-color: #7C3AED;
+    color: #FFFFFF;
+}
+
+.manajer-pagination-container .page-item.disabled .page-link {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background: #F8FAFC;
+}
+
+.manajer-pagination-container .page-item .page-link:hover:not(.active) {
+    background: #F1F5F9;
+    color: #0F172A;
+}
+
+/* Global SVG Fix for Tailwind default pagination icons */
+svg.w-5,
+svg.h-5,
+.pagination svg,
+nav[role="navigation"] svg {
+    width: 16px !important;
+    height: 16px !important;
+    max-width: 20px !important;
+    max-height: 20px !important;
+    display: inline-block !important;
+}

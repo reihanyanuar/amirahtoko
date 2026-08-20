@@ -339,6 +339,75 @@
     color: #0F172A;
 }
 
+/* Modal Backdrop & Cards for Admin / Manajer Popup Forms */
+.admin-modal-backdrop,
+.manajer-modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.55);
+    backdrop-filter: blur(3px);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+}
+
+.admin-modal-card,
+.manajer-modal-card {
+    background: #FFFFFF;
+    border-radius: 14px;
+    width: 480px;
+    max-width: 95%;
+    padding: 24px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+    animation: modalSlideUp 0.2s ease;
+}
+
+@keyframes modalSlideUp {
+    from { opacity: 0; transform: translateY(12px) scale(0.98); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.modal-form-group {
+    margin-bottom: 12px;
+}
+
+.modal-form-group label {
+    display: block;
+    font-size: 13.5px;
+    font-weight: 600;
+    color: #334155;
+    margin-bottom: 4px;
+}
+
+.modal-form-group input,
+.modal-form-group select {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1.5px solid #CBD5E1;
+    border-radius: 8px;
+    font-size: 14.5px;
+    font-family: inherit;
+    background: #FFFFFF;
+    color: #0F172A;
+    transition: all 0.15s ease;
+}
+
+.modal-form-group input:focus,
+.modal-form-group select:focus {
+    outline: none;
+    border-color: #2563EB;
+    box-shadow: 0 0 0 2.5px rgba(37, 99, 235, 0.15);
+}
+
+.admin-modal-sub {
+    font-size: 13.5px;
+    color: #64748B;
+    margin-bottom: 16px;
+    margin-top: 2px;
+}
+
 .admin-modal-close {
     background: none;
     border: none;
@@ -1044,12 +1113,17 @@
 }
 
 /* ============================================================
-   FORM FULL PAGE — TAMBAH/EDIT BARANG (2 KOLOM, TANPA SCROLL)
+   FORM FULL PAGE — TAMBAH/EDIT BARANG (2 KOLOM, 0 SCROLL, FONT BESAR)
    ============================================================ */
+.main-content:has(.form-fullpage-grid) {
+    padding: 10px 24px !important;
+    overflow-y: hidden !important;
+}
+
 .form-fullpage-grid {
     display: grid;
-    grid-template-columns: 1fr 1.45fr;
-    gap: 18px;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
     align-items: start;
 }
 
@@ -1057,15 +1131,15 @@
 .form-col-right {
     display: flex;
     flex-direction: column;
-    gap: 14px;
+    gap: 8px;
 }
 
-/* ---- SATUAN GROUP CARD ---- */
+/* ---- SATUAN GROUP CARD (5 BOX CARDS - FONT BESAR) ---- */
 .satuan-group {
     background: #FFFFFF;
     border: 1.5px solid #E2E8F0;
-    border-radius: 14px;
-    padding: 16px 18px 6px;
+    border-radius: 10px;
+    padding: 9px 14px 5px;
     box-shadow: 0 1px 4px rgba(0,0,0,0.04);
 }
 
@@ -1073,21 +1147,25 @@
     display: flex;
     align-items: center;
     gap: 8px;
-    margin-bottom: 14px;
-    padding-bottom: 10px;
+    margin-bottom: 5px;
+    padding-bottom: 5px;
     border-bottom: 1.5px solid #F1F5F9;
 }
 
 .satuan-group-icon { font-size: 18px; }
 
 .satuan-group-title {
-    font-size: 15px;
+    font-size: 17px;
     font-weight: 800;
     color: #0F172A;
     letter-spacing: -0.2px;
 }
 
-/* Color accents per satuan */
+/* Color accents per box */
+.satuan-group.box-info  { border-color: #CBD5E1; background: linear-gradient(135deg,#fff 0%,#F8FAFC 100%); }
+.satuan-group.box-info  .satuan-group-header { border-bottom-color: #E2E8F0; }
+.satuan-group.box-info  .satuan-group-title  { color: #0F172A; }
+
 .satuan-dus  { border-color: #BFDBFE; background: linear-gradient(135deg,#fff 0%,#EFF6FF 100%); }
 .satuan-dus  .satuan-group-header { border-bottom-color: #BFDBFE; }
 .satuan-dus  .satuan-group-title  { color: #1D4ED8; }
@@ -1100,26 +1178,33 @@
 .satuan-pcs  .satuan-group-header { border-bottom-color: #DDD6FE; }
 .satuan-pcs  .satuan-group-title  { color: #7C3AED; }
 
-/* Form rows inside satuan group — compact */
-.satuan-group .form-row        { margin-bottom: 11px; }
-.satuan-group .form-row label  { font-size: 13.5px; font-weight: 600; color: #475569; margin-bottom: 4px; }
-.satuan-group .form-row input,
-.satuan-group .form-row select { padding: 9px 12px; font-size: 15px; border-radius: 8px; }
+.satuan-group.box-stok  { border-color: #FDE68A; background: linear-gradient(135deg,#fff 0%,#FFFBEB 100%); }
+.satuan-group.box-stok  .satuan-group-header { border-bottom-color: #FDE68A; }
+.satuan-group.box-stok  .satuan-group-title  { color: #B45309; }
+
+/* Form rows inside satuan group — clear legible fonts */
+.satuan-group .vb-row          { margin-bottom: 5px; gap: 2px; }
+.satuan-group .vb-row-two      { margin-bottom: 5px; gap: 10px; }
+.satuan-group .vb-lbl          { font-size: 15.5px; font-weight: 600; color: #1E293B; margin-bottom: 2px; }
+.satuan-group .vb-inp,
+.satuan-group .vb-select-btn   { padding: 5px 11px; font-size: 16.5px; border-radius: 6px; height: 36px; }
+
+.satuan-group .vb-select-btn   { padding: 5px 11px; }
 
 /* ---- KONVERSI INFO BOX ---- */
 .konversi-info {
     background: #F0FDF4;
     border: 1.5px solid #BBF7D0;
-    border-radius: 10px;
-    padding: 10px 14px;
-    margin-bottom: 12px;
+    border-radius: 8px;
+    padding: 6px 12px;
+    margin-bottom: 6px;
 }
 
 .konversi-row {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 3px 0;
+    padding: 2px 0;
 }
 
 .konversi-label { font-size: 14px; color: #15803D; font-weight: 600; }
@@ -1129,14 +1214,14 @@
 .form-action-row {
     display: flex;
     gap: 12px;
-    margin-top: 18px;
+    margin-top: 8px;
     justify-content: flex-end;
 }
 
 .btn-batal-form {
-    padding: 12px 28px;
+    padding: 9px 24px;
     border: 1.5px solid #E2E8F0;
-    border-radius: 10px;
+    border-radius: 8px;
     background: #FFFFFF;
     color: #64748B;
     font-size: 15px;
@@ -1157,16 +1242,16 @@
 }
 
 .btn-simpan-form {
-    padding: 12px 36px;
+    padding: 9px 32px;
     background: linear-gradient(135deg, #2563EB, #3B82F6);
     color: #FFFFFF;
     border: none;
-    border-radius: 10px;
+    border-radius: 8px;
     font-size: 16px;
     font-weight: 700;
     font-family: inherit;
     cursor: pointer;
-    box-shadow: 0 4px 14px rgba(37,99,235,0.3);
+    box-shadow: 0 4px 12px rgba(37,99,235,0.25);
     transition: all 0.2s ease;
     display: inline-flex;
     align-items: center;
@@ -1175,23 +1260,17 @@
 
 .btn-simpan-form:hover {
     background: linear-gradient(135deg, #1D4ED8, #2563EB);
-    box-shadow: 0 6px 20px rgba(37,99,235,0.4);
+    box-shadow: 0 6px 18px rgba(37,99,235,0.35);
     transform: translateY(-1px);
 }
 
 /* ============================================================
-   RESPONSIVE FORM & ADMIN PAGES (LAYAR < 1024px & < 768px)
+   RESPONSIVE MOBILE BREAKPOINT (< 650px SAJA)
    ============================================================ */
-@media (max-width: 1024px) {
-    .vb-form-grid-2col,
+@media (max-width: 650px) {
     .form-fullpage-grid {
         grid-template-columns: 1fr !important;
-        gap: 14px;
-    }
-
-    div[style*="grid-template-columns: 420px 1fr"],
-    div[style*="grid-template-columns: 1fr 1.4fr"] {
-        grid-template-columns: 1fr !important;
+        gap: 12px;
     }
 }
 
